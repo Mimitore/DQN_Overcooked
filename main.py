@@ -6,6 +6,7 @@ from CuttingBoard import CuttingBoard
 from FoodCrate import FoodCrate
 from Player import Player
 from Item import Item
+from Vegetable import Vegetable
 from config import BLACK,WHITE,ONION,GRAY
 
 pygame.init()
@@ -58,11 +59,18 @@ while running:
 
     if keys[pygame.K_SPACE]:
         if player.held_item:
+                if player.is_facing(cuttingboard):
+                    cuttingboard.place_item(player.held_item)
+                    print(f"Le joueur a posé un {player.held_item} sur la cuttingboard")
                 # Si le joueur tient un objet et appuie sur espace, relâcher cet objet
                 player.drop_item(player.direction)
         else:
             # Sinon, interagir avec les objets environnants pour en prendre un
             player.interact()
+
+    if keys[pygame.K_c]:
+        if player.is_facing(cuttingboard):
+            cuttingboard.cut_item()
 
     # Interface graphique
     screen.fill(BLACK)
