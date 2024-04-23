@@ -7,11 +7,15 @@ class Vegetable(Item):
     def __init__(self, pos, shape,crate):
         super().__init__(pos, shape) 
         self.isCut = False
+        self.isCooked = False
         self.crate = crate
     
     def cut(self):
         self.isCut = True
         # coupêr visuellement l'oignon
+    
+    def cooked(self):
+        self.isCooked = False
 
     def draw(self, screen):
             super().draw(screen) 
