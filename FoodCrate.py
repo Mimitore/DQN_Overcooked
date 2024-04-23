@@ -1,6 +1,6 @@
 from CookingStation import CookingStation
 from Player import Player
-from Item import Item
+from Vegetable import Vegetable
 class FoodCrate(CookingStation):
     def __init__(self,pos,shape):
         super().__init__(pos,shape)
@@ -22,7 +22,7 @@ class FoodCrate(CookingStation):
         if player.is_facing(self):
             if not self.is_blocked:
                 if player.held_item is None:
-                    new_item = Item(self.pos,self.item_type)
+                    new_item = Vegetable(self.pos,self.item_type)
                     player.take_item(new_item)
                     self.items.append(new_item)
                     player.interactables.append(new_item)
