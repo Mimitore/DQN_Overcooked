@@ -4,10 +4,10 @@ from Item import Item
 from config import GRAY,BLACK,WHITE,ONION
 
 class Vegetable(Item):
-    def __init__(self, pos, shape, state):
-        super().__init__(pos, shape)
-        self.item_type = {1:"oignon", 2:"champignon", 3:"tomate"}
-        state = "non-cut"
+    def __init__(self, pos, shape, vege, state="non-cut"):
+        super().__init__(pos, shape) 
+        self.item_type = vege # "oignon", "champignon" ou "tomate"
+        self.state = "non-cut"
 
     def getPos(self):
         return self.pos
@@ -20,6 +20,7 @@ class Vegetable(Item):
     
     def cut(self):
         self.state = "cut"
+        print("Vegetable coupé !")
 
 
     def interact(self, player):
