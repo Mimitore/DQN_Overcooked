@@ -17,7 +17,7 @@ class Container(Item):
             center = (self.pos[0] + 25, self.pos[1] + 25)
             pygame.draw.circle(screen, WHITE, center, 25)  
             pygame.draw.circle(screen, BLACK, center, 25,3)  
-
+            pygame.draw.circle(screen, BLACK, center, 20,1) 
 
     def add_ingredient(self,item):
         self.ingredients.append(item)

@@ -11,6 +11,7 @@ from Container import Container
 from Cookware import Cookware
 from InteractionManager import InteractionManager
 from config import BLACK,WHITE,ONION,GRAY
+from PlateCrate import PlateCrate
 
 pygame.init()
 
@@ -30,14 +31,16 @@ stove = HotStove((0, 0))
 cuttingboard = CuttingBoard((450,450))
 onioncrate = FoodCrate((0,450),"onion")
 pot = Cookware((0,0),"pot")
+platecrate = PlateCrate((100,200),"plate")
 
-player.interactables = [onioncrate, cuttingboard, stove, pot]
+player.interactables = [onioncrate, cuttingboard, stove, pot,platecrate]
 
 # Définition des collisions 
 obstacles = [
     pygame.Rect(0, 0, 50,50),
     pygame.Rect(0,450,50,50),
-    pygame.Rect(450,450,50,50)
+    pygame.Rect(450,450,50,50),
+    pygame.Rect(100,200,50,50)
 ]
 
 
@@ -89,6 +92,7 @@ while running:
     cuttingboard.draw(screen)
     onioncrate.draw(screen)
     pot.draw(screen)
+    platecrate.draw(screen)
 
     # MàJ
     pygame.display.flip()
