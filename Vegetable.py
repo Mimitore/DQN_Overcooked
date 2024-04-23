@@ -1,12 +1,13 @@
 import pygame
-
+from Item import Item
 
 from config import GRAY,BLACK,WHITE,ONION
 
-class Item:
-    def __init__(self, pos,shape,state):
-        super().__init__(pos,shape)
-        state = self.state
+class Vegetable(Item):
+    def __init__(self, pos, shape, state):
+        super().__init__(pos, shape)
+        self.item_type = {1:"oignon", 2:"champignon", 3:"tomate"}
+        state = "non-cut"
 
     def getPos(self):
         return self.pos
@@ -16,7 +17,9 @@ class Item:
 
     def update_position(self, player_x, player_y):
         self.pos = (player_x , player_y)
-       
+    
+    def cut(self):
+        self.state = "cut"
 
 
     def interact(self, player):
