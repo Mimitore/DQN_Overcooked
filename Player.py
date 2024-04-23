@@ -101,8 +101,9 @@ class Player:
                 offset = InteractionManager.calculate_offset(self.direction)
 
             new_pos = (self.rect[0] + offset[0], self.rect[1] + offset[1])
-            if not self.held_item.on_drop(new_pos, self.interactables):
-                # Si l'item n'est pas ajouté à un Cookware, il reste lâché
-                self.held_item.setPos(new_pos)
-                            
+            self.held_item.setPos(new_pos)
+            for obj in self.interactables:
+                if obj.pos == self.held_item.pos:
+                    InteractionManager.process_interaction(self.held_item,obj)
+
             self.held_item = None
