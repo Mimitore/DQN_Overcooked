@@ -65,7 +65,7 @@ while running:
                     cuttingboard.place_item(player.held_item)
                     print(f"Le joueur a posé un {player.held_item} sur la cuttingboard")
                 # Si le joueur tient un objet et appuie sur espace, relâcher cet objet
-                player.drop_item(player.direction)
+                player.drop_item()
         else:
             # Sinon, interagir avec les objets environnants pour en prendre un
             player.interact()

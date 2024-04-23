@@ -1,6 +1,6 @@
 import pygame
 from Item import Item
-
+from Cookware import Cookware
 from config import GRAY,BLACK,WHITE,ONION
 
 class Vegetable(Item):
@@ -15,4 +15,12 @@ class Vegetable(Item):
 
     def draw(self, screen):
             super().draw(screen) 
-    
+
+    def on_drop(self, new_pos, interactables):
+        super().on_drop(new_pos,interactables)
+        if self.isCut:
+            for obj in interactables:
+                if isinstance(obj, Cookware) and obj.pos == self.pos:
+                    obj.add_ingredient(self)
+                    return True  # Indique que le légume a été ajouté à un Cookware
+        return False

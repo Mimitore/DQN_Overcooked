@@ -36,3 +36,6 @@ class Item:
             pygame.draw.circle(screen, GRAY, center, 10)  
             pygame.draw.circle(screen, BLACK, center, 10,3) 
     
+    def on_drop(self, new_pos,interactables):
+        self.setPos(new_pos)
+        return False
