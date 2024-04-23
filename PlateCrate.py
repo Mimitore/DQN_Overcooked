@@ -28,6 +28,7 @@ class PlateCrate(CookingStation):
         if item in self.items:
             self.items.remove(item)
 
+
     def interact(self, player):
         super().interact(player)
         if player.is_facing(self):

@@ -97,13 +97,18 @@ class Player:
             print(f"Le joueur lâche un {self.held_item}.")
             
             if(self.direction):
-                print(self.direction)
                 offset = InteractionManager.calculate_offset(self.direction)
 
             new_pos = (self.rect[0] + offset[0], self.rect[1] + offset[1])
-            self.held_item.setPos(new_pos)
-            for obj in self.interactables:
-                if obj.pos == self.held_item.pos:
-                    InteractionManager.process_interaction(self.held_item,obj)
 
-            self.held_item = None
+            
+            status = self.held_item.isDropable(new_pos,self.interactables)
+
+            if status == "drop":
+                self.held_item.pos = new_pos
+                self.held_item = None
+
+            elif status == "del":
+                self.held_item.crate.removeItem(self.held_item)
+                self.held_item = None
+        

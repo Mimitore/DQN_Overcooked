@@ -22,4 +22,7 @@ class Container(Item):
     def add_ingredient(self,item):
         self.ingredients.append(item)
 
+    def isDropable(self, new_pos, interactables):
+        return super().isDropable(new_pos, interactables)
+
     

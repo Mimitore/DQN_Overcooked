@@ -16,13 +16,13 @@ class CookingStation:
 
     def checkBlocked(self,player):
         current_time = pygame.time.get_ticks()
-        if current_time - self.last_check_time > 1000:
+        if current_time - self.last_check_time > 800:
             self.last_check_time = current_time
-            self.is_blocked = False
             for obj in player.interactables:
                 if obj.pos == self.pos and obj != self:
                     self.is_blocked = True 
                     break
+            self.is_blocked = False
 
     def interact(self, player):
         """ Méthode pour gérer l'interaction d'un joueur avec la station """

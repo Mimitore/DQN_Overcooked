@@ -28,4 +28,7 @@ class Cookware(Container):
     def add_ingredient(self, item):
         return super().add_ingredient(item)
     
+    def isDropable(self, new_pos, interactables):
+        return super().isDropable(new_pos, interactables)
+    
     

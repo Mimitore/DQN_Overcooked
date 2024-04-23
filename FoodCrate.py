@@ -23,6 +23,7 @@ class FoodCrate(CookingStation):
 
     def interact(self, player):
         super().interact(player)
+        
         if player.is_facing(self):
             if not self.is_blocked:
                 if player.held_item is None:
