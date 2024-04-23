@@ -1,4 +1,5 @@
 from Container import Container
+from HotStove import HotStove
 
 class Cookware(Container):
     def __init__(self, pos, shape):
@@ -6,11 +7,18 @@ class Cookware(Container):
         self.state = "no-heat"
 
     def cooking(self):
-        if self.ingredients != []:  
+        if self.ingredients != [] and self.isOnStove:  
             self.state = "heat"
             print("Le pot a cuit miam :)")
         else:
             print("Le pot n'a pas cuit triste :(")
+    
+    def isOnStove(self, player):
+        for obj in player.interactables:
+            if isinstance(obj, HotStove):
+                if obj.pos == self.pos:
+                    return True
+        return False
 
     def draw(self, screen):
             super().draw(screen) 

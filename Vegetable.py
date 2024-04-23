@@ -6,11 +6,11 @@ from config import GRAY,BLACK,WHITE,ONION
 class Vegetable(Item):
     def __init__(self, pos, shape,crate):
         super().__init__(pos, shape) 
-        self.state = "non-cut"
+        self.isCut = False
         self.crate = crate
     
     def cut(self):
-        self.state = "cut"
+        self.isCut = True
         # coupêr visuellement l'oignon
 
     def draw(self, screen):

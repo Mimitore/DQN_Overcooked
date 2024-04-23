@@ -112,11 +112,12 @@ class Player:
             self.held_item.setPos((self.rect[0]+offset_x , self.rect[1]+offset_y))
             
             if (isinstance(self.held_item, Vegetable)):
-                for obj in self.interactables:
-                    if (isinstance(obj, Cookware)):
-                        print('c\'est dans la marmite')
-                        if obj.pos == self.held_item.pos:
-                            obj.add_ingredient(self.held_item)
-                            self.held_item.crate.removeItem(self.held_item)
+                if (self.held_item.isCut):
+                    for obj in self.interactables:
+                        if (isinstance(obj, Cookware)):
+                            if obj.pos == self.held_item.pos:
+                                print('c\'est dans la marmite')
+                                obj.add_ingredient(self.held_item)
+                                self.held_item.crate.removeItem(self.held_item)
                             
             self.held_item = None
