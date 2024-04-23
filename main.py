@@ -7,6 +7,8 @@ from FoodCrate import FoodCrate
 from Player import Player
 from Item import Item
 from Vegetable import Vegetable
+from Container import Container
+from Cookware import Cookware
 from config import BLACK,WHITE,ONION,GRAY
 
 pygame.init()
@@ -26,7 +28,7 @@ player = Player(50,50)
 stove = HotStove((0, 0))
 cuttingboard = CuttingBoard((450,450))
 onioncrate = FoodCrate((0,450),"onion")
-pot = Item((0,0),"pot")
+pot = Cookware((0,0),"pot")
 
 player.interactables = [onioncrate, cuttingboard, stove, pot]
 

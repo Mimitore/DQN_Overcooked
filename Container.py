@@ -20,4 +20,6 @@ class Container(Item):
 
 
     def add_ingredient(self,item):
-        ...
+        self.ingredients.append(item)
+
+    

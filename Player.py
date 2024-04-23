@@ -1,7 +1,9 @@
 import pygame
 from Item import Item
 from CookingStation import CookingStation
-
+from Vegetable import Vegetable
+from Container import Container
+from Cookware import Cookware
 class Player:
     def __init__(self, x, y):
         self.rect = pygame.Rect(x, y, 50, 50)
@@ -108,4 +110,11 @@ class Player:
                 offset_x = 0
                 offset_y = -50
             self.held_item.setPos((self.rect[0]+offset_x , self.rect[1]+offset_y))
+            
+            if (isinstance(self.held_item, Vegetable)):
+                for obj in self.interactables:
+                    if (isinstance(obj, Cookware)):
+                        if obj.pos == self.held_item.pos:
+                            obj.add_ingredient(self.held_item)
+                            del self.held_item
             self.held_item = None
