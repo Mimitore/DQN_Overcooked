@@ -44,4 +44,6 @@ class CookingStation:
         elif self.shape == "onion":
             pygame.draw.rect(screen, ONION, pygame.Rect(self.pos[0], self.pos[1], 50, 50))
 
+        elif self.shape == "table":
+            pygame.draw.rect(screen, WHITE, pygame.Rect(self.pos[0], self.pos[1], 50, 50))
 

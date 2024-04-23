@@ -1,0 +1,16 @@
+from CookingStation import CookingStation
+import pygame
+from config import WHITE,BLACK,GRAY
+
+class ServiceStation(CookingStation):
+    def __init__(self, pos, shape):
+        super().__init__(pos, shape)
+
+
+    def draw(self, screen):
+        super().draw(screen)
+        if self.shape == "service":
+            pygame.draw.rect(screen, GRAY, pygame.Rect(self.pos[0], self.pos[1], 50, 50))
+
+    
+    
