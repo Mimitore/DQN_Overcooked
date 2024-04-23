@@ -4,14 +4,7 @@ from HotStove import HotStove
 class Cookware(Container):
     def __init__(self, pos, shape):
         super().__init__(pos, shape)
-        self.state = "no-heat"
-
-    def cooking(self):
-        if self.ingredients != [] and self.isOnStove:  
-            self.state = "heat"
-            print("Le pot a cuit miam :)")
-        else:
-            print("Le pot n'a pas cuit triste :(")
+        self.isWarm = False
     
     def isOnStove(self, player):
         for obj in player.interactables:

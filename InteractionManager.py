@@ -26,3 +26,10 @@ class InteractionManager:
                     print('c\'est dans la marmite')
                     obj.add_ingredient(item)
                     item.crate.removeItem(item)
+    
+    def cooking(pot):
+        if pot.ingredients != [] and pot.isOnStove:  
+            pot.isWarm = True
+            print("Le pot a cuit miam :)")
+        else:
+            print("Le pot n'a pas cuit triste :(")

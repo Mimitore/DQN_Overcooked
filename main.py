@@ -9,6 +9,7 @@ from Item import Item
 from Vegetable import Vegetable
 from Container import Container
 from Cookware import Cookware
+from InteractionManager import InteractionManager
 from config import BLACK,WHITE,ONION,GRAY
 
 pygame.init()
@@ -61,9 +62,15 @@ while running:
 
     if keys[pygame.K_SPACE]:
         if player.held_item:
-                if player.is_facing(cuttingboard):
+                # Poser le pot sur la cuisinière
+                if isinstance(player.held_item, Cookware) and player.is_facing(stove):
+                    InteractionManager.cooking(pot)
+
+                # Poser un vegetable sur la cuttingboard
+                if isinstance(player.held_item, Vegetable) and player.is_facing(cuttingboard):
                     cuttingboard.place_item(player.held_item)
                     print(f"Le joueur a posé un {player.held_item} sur la cuttingboard")
+                
                 # Si le joueur tient un objet et appuie sur espace, relâcher cet objet
                 player.drop_item()
         else:
