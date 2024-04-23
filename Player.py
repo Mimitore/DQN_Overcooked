@@ -114,7 +114,9 @@ class Player:
             if (isinstance(self.held_item, Vegetable)):
                 for obj in self.interactables:
                     if (isinstance(obj, Cookware)):
+                        print('c\'est dans la marmite')
                         if obj.pos == self.held_item.pos:
                             obj.add_ingredient(self.held_item)
-                            del self.held_item
+                            self.held_item.crate.removeItem(self.held_item)
+                            
             self.held_item = None

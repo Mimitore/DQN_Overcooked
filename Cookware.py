@@ -24,4 +24,7 @@ class Cookware(Container):
     def draw(self, screen):
         return super().draw(screen)
     
+    def add_ingredient(self, item):
+        return super().add_ingredient(item)
+    
     

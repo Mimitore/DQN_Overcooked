@@ -4,9 +4,10 @@ from Item import Item
 from config import GRAY,BLACK,WHITE,ONION
 
 class Vegetable(Item):
-    def __init__(self, pos, shape):
+    def __init__(self, pos, shape,crate):
         super().__init__(pos, shape) 
         self.state = "non-cut"
+        self.crate = crate
     
     def cut(self):
         self.state = "cut"
