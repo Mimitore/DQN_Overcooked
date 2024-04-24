@@ -4,6 +4,7 @@ from Item import Item
 from CookingStation import CookingStation
 from CuttingBoard import CuttingBoard
 from Container import Container
+from ServiceStation import ServiceStation
 
 class InteractionManager:
 
@@ -36,6 +37,15 @@ class InteractionManager:
             obj.item = item
             return 'drop'
         
+        elif isinstance(item,Container) and isinstance(obj, ServiceStation):
+            # Verification si c'est un plat à servir sur le comptoir
+            if obj.checkPlate(item):
+                print('Un service est fait')
+                return "del"
+            else:
+                print('plat non valide')
+                return "keep"
+
         elif isinstance(item,Cookware) and isinstance(obj, Container):
             # A modifier plus tard lorsqu'on aura un autre type de soupe à faire
             if item.isFull() and obj.isEmpty() and obj.shape =="plate":

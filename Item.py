@@ -33,8 +33,8 @@ class Item:
         
         elif self.shape == "pot":
             center = (self.pos[0] + 25, self.pos[1] + 25)
-            pygame.draw.circle(screen, GRAY, center, 10)  
-            pygame.draw.circle(screen, BLACK, center, 10,3) 
+            pygame.draw.circle(screen, GRAY, center, 15)  
+            pygame.draw.circle(screen, BLACK, center, 15,3) 
     
     def isDropable(self, new_pos, interactables):
             dropable = ["drop"]

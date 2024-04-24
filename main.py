@@ -12,7 +12,7 @@ from Cookware import Cookware
 from InteractionManager import InteractionManager
 from config import BLACK,WHITE,ONION,GRAY
 from PlateCrate import PlateCrate
-
+from ServiceStation import ServiceStation
 pygame.init()
 
 # Taille de la fenêtre
@@ -32,15 +32,17 @@ cuttingboard = CuttingBoard((450,450))
 onioncrate = FoodCrate((0,450),"onion")
 pot = Cookware((0,0),"pot")
 platecrate = PlateCrate((100,200),"plate")
+servicestation = ServiceStation((450,0),"service")
 
-player.interactables = [onioncrate, cuttingboard, stove, pot,platecrate]
+player.interactables = [onioncrate, cuttingboard, stove, pot,platecrate,servicestation]
 
 # Définition des collisions 
 obstacles = [
     pygame.Rect(0, 0, 50,50),
     pygame.Rect(0,450,50,50),
     pygame.Rect(450,450,50,50),
-    pygame.Rect(100,200,50,50)
+    pygame.Rect(100,200,50,50),
+    pygame.Rect(450,0,50,50)
 ]
 
 
@@ -80,6 +82,7 @@ while running:
     pygame.draw.rect(screen, WHITE, player.rect) #player
 
     stove.draw(screen)
+    servicestation.draw(screen)
     cuttingboard.draw(screen)
     platecrate.draw(screen)
     onioncrate.draw(screen)

@@ -8,6 +8,7 @@ class Container(Item):
         self.ingredients = []
         self.full = False
         self.crate = crate
+
     def update_position(self, player_x, player_y):
         return super().update_position(player_x, player_y)
     
@@ -47,3 +48,9 @@ class Container(Item):
         for ingredient in self.ingredients:
             container.add_ingredient(ingredient)
         self.ingredients.clear() 
+
+
+    def clearSoup(self, screen,bg):
+        if not self.full:
+            center = (self.pos[0] + 25, self.pos[1] + 25)
+            pygame.draw.circle(screen, bg, center, 10)

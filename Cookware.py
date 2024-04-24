@@ -1,11 +1,12 @@
 from Container import Container
 from HotStove import HotStove
-
+from config import GRAY
 class Cookware(Container):
     def __init__(self, pos, shape,crate=None):
         super().__init__(pos, shape,crate)
         self.isWarm = False
-    
+        self.full = False
+
     def isOnStove(self, interactables):
         for obj in interactables:
             if isinstance(obj, HotStove):
@@ -15,15 +16,17 @@ class Cookware(Container):
 
     def draw(self, screen):
             super().draw(screen) 
+            if self.isFull():
+                self.addSoup(screen)
+            elif self.isEmpty():
+                self.clearSoup(screen,GRAY)
 
     def update_position(self, player_x, player_y):
         return super().update_position(player_x, player_y)
     
     def interact(self, player):
         return super().interact(player)
-    
-    def draw(self, screen):
-        return super().draw(screen)
+
     
     def add_ingredient(self, item):
         return super().add_ingredient(item)
@@ -31,6 +34,9 @@ class Cookware(Container):
     def isFull(self):
         return super().isFull()
 
+    def addSoup(self, screen):
+        return super().addSoup(screen)
+    
     def isDropable(self, new_pos, interactables):
         return super().isDropable(new_pos, interactables)
     
@@ -45,3 +51,6 @@ class Cookware(Container):
                 print(self.ingredients)
         else:
             print("Le pot n\'est pas au dessus du feu")
+
+    def clearSoup(self, screen, bg):
+        return super().clearSoup(screen, bg)
