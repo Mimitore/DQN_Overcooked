@@ -66,9 +66,6 @@ while running:
     if keys[pygame.K_SPACE]:
         player.update_item_position()
         if player.held_item:
-                # Poser le pot sur la cuisinière
-                if player.is_facing(stove):
-                    InteractionManager.cooking(pot)
                     
                 # Poser un vegetable sur la cuttingboard
                 if isinstance(player.held_item, Vegetable) and player.is_facing(cuttingboard):

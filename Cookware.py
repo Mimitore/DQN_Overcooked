@@ -6,8 +6,8 @@ class Cookware(Container):
         super().__init__(pos, shape)
         self.isWarm = False
     
-    def isOnStove(self, player):
-        for obj in player.interactables:
+    def isOnStove(self, interactables):
+        for obj in interactables:
             if isinstance(obj, HotStove):
                 if obj.pos == self.pos:
                     return True
@@ -28,7 +28,22 @@ class Cookware(Container):
     def add_ingredient(self, item):
         return super().add_ingredient(item)
     
+    def isFull(self):
+        if len(self.ingredients)==2:
+            return True
+        return False
+
     def isDropable(self, new_pos, interactables):
         return super().isDropable(new_pos, interactables)
     
-    
+    def cooking(self,interactables):
+        if self.isOnStove(interactables):  
+            if self.isFull():
+            
+                self.isWarm = True
+                print("Le pot a cuit miam :)")
+            else:
+                print("Pas assez d\'ingrédient")
+                print(self.ingredients)
+        else:
+            print("Le pot n\'est pas au dessus du feu")

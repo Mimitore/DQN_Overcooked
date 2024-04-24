@@ -16,7 +16,7 @@ class Vegetable(Item):
         # couper visuellement l'oignon
     
     def cooked(self):
-        self.isCooked = False
+        self.isCooked = True
 
     def draw(self, screen):
             super().draw(screen) 

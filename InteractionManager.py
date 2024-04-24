@@ -21,17 +21,18 @@ class InteractionManager:
 
     def process_interaction(self,item, obj,interactables):
         if isinstance(item, Vegetable) and isinstance(obj, Cookware):
-            if item.isCut:  
+            if item.isCut and not obj.isFull():  
                 print('c\'est dans la marmite')
                 obj.add_ingredient(item)
+                obj.cooking(interactables)
                 return "del"
             else:
-                print("Le légume n'est pas coupé.")
+                print("Le légume n'est pas coupé ou bien la marmite est remplie.")
                 return "keep"
 
         elif isinstance(item, Item) and isinstance(obj,CookingStation): 
             obj.checkBlocked(interactables)
-            
+
             if obj.is_blocked:
                 print("Non, c'est bloqué D:<")
                 return "keep"
@@ -40,9 +41,3 @@ class InteractionManager:
         return "drop"
             
 
-    def cooking(pot):
-        if pot.ingredients != [] and pot.isOnStove:  
-            pot.isWarm = True
-            print("Le pot a cuit miam :)")
-        else:
-            print("Le pot n'a pas cuit triste :(")
