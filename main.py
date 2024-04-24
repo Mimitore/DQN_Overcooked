@@ -68,9 +68,9 @@ while running:
         if player.held_item:
                     
                 # Poser un vegetable sur la cuttingboard
-                if isinstance(player.held_item, Vegetable) and player.is_facing(cuttingboard):
-                    cuttingboard.place_item(player.held_item)
-                    print(f"Le joueur a posé un {player.held_item} sur la cuttingboard")
+                # if isinstance(player.held_item, Vegetable) and player.is_facing(cuttingboard):
+                #     cuttingboard.place_item(player.held_item)
+                #     print(f"Le joueur a posé un {player.held_item} sur la cuttingboard")
                 
                 # Si le joueur tient un objet et appuie sur espace, relâcher cet objet
                 player.drop_item()
@@ -79,8 +79,7 @@ while running:
             player.interact()
 
     if keys[pygame.K_c]:
-        if player.is_facing(cuttingboard):
-            cuttingboard.cut_item()
+        player.cut()
 
     # Interface graphique
     screen.fill(BLACK)

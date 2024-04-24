@@ -1,5 +1,6 @@
 import pygame
-
+from Vegetable import Vegetable
+from CuttingBoard import CuttingBoard
 
 
 class Player:
@@ -111,3 +112,12 @@ class Player:
 
             else:
                 print('keep ur object')
+
+    def cut(self):
+        if self.held_item == None:
+            for obj in self.interactables:
+                if isinstance(obj, CuttingBoard) and self.is_facing(obj) and isinstance(obj.item,Vegetable):
+                    obj.item.cut()
+                    print("the vegetable is cut")
+                    break
+                

@@ -6,9 +6,6 @@ class CuttingBoard(CookingStation):
     def __init__(self,pos):
         super().__init__(pos,"cuttingboard")
         self.item = None
-    
-    def place_item(self, item):
-        self.item = item
 
     def cut_item(self):
         if isinstance(self.item, Vegetable):  
@@ -20,3 +17,11 @@ class CuttingBoard(CookingStation):
     def draw(self, screen):
             super().draw(screen) 
 
+    def interact(self, player):
+        super().interact(player)
+        for obj in player.interactables:
+             if obj.pos == self.pos and obj!=self:
+                self.item = obj
+                print("theres an object on the cuttingboard")
+                print(obj)
+                break

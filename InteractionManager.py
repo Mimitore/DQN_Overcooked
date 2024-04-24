@@ -2,6 +2,7 @@ from Vegetable import Vegetable
 from Cookware import Cookware
 from Item import Item
 from CookingStation import CookingStation
+from CuttingBoard import CuttingBoard
 
 class InteractionManager:
 
@@ -29,6 +30,7 @@ class InteractionManager:
             else:
                 print("Le légume n'est pas coupé ou bien la marmite est remplie.")
                 return "keep"
+
 
         elif isinstance(item, Item) and isinstance(obj,CookingStation): 
             obj.checkBlocked(interactables)
