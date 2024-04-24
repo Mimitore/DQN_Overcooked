@@ -13,6 +13,12 @@ class ServiceStation(CookingStation):
             pygame.draw.rect(screen, GRAY, pygame.Rect(self.pos[0], self.pos[1], 50, 50))
 
     
-    def checkPlate(self):
-        ...
+    def checkPlate(self,plate):
+        if plate.isFull():
+            plate.crate.removeItem(plate)
+            return True
+        else:
+            return False
+
+    
     

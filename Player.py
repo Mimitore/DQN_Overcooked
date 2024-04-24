@@ -106,6 +106,7 @@ class Player:
                 self.held_item.pos = new_pos
                 print(f"Le joueur lâche un {self.held_item}.")
                 self.held_item = None
+                
             elif status == "del":
                 self.held_item.crate.removeItem(self.held_item)
                 self.held_item = None
