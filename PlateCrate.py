@@ -12,6 +12,7 @@ class PlateCrate(CookingStation):
     def draw(self, screen):
             super().draw(screen) 
             for item in self.items:
+                item.isFull()
                 item.draw(screen)
 
             pygame.draw.rect(screen, GRAY,pygame.Rect(self.pos[0], self.pos[1], 50, 50))
@@ -34,7 +35,7 @@ class PlateCrate(CookingStation):
         if player.is_facing(self):
             if not self.is_blocked:
                 if player.held_item is None:
-                    new_item = Container(self.pos,"plate")
+                    new_item = Container(self.pos,"plate",self)
                     player.take_item(new_item)
                     self.items.append(new_item)
                     player.interactables.append(new_item)

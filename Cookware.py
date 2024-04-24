@@ -2,8 +2,8 @@ from Container import Container
 from HotStove import HotStove
 
 class Cookware(Container):
-    def __init__(self, pos, shape):
-        super().__init__(pos, shape)
+    def __init__(self, pos, shape,crate=None):
+        super().__init__(pos, shape,crate)
         self.isWarm = False
     
     def isOnStove(self, interactables):
@@ -29,9 +29,7 @@ class Cookware(Container):
         return super().add_ingredient(item)
     
     def isFull(self):
-        if len(self.ingredients)==2:
-            return True
-        return False
+        return super().isFull()
 
     def isDropable(self, new_pos, interactables):
         return super().isDropable(new_pos, interactables)
