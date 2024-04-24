@@ -20,10 +20,6 @@ class Container(Item):
             pygame.draw.circle(screen, BLACK, center, 25,3)  
             pygame.draw.circle(screen, BLACK, center, 20,1) 
 
-            if self.isFull == True:
-                print("la soupe est ajoutée à l'assiette")
-                self.addSoup(screen)
-
     def addSoup(self,screen):
         center = (self.pos[0] + 25, self.pos[1] + 25)
         pygame.draw.circle(screen,ONION,center,10)

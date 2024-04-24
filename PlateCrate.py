@@ -12,8 +12,9 @@ class PlateCrate(CookingStation):
     def draw(self, screen):
             super().draw(screen) 
             for item in self.items:
-                item.isFull()
                 item.draw(screen)
+                if item.full:
+                    item.addSoup(screen)
 
             pygame.draw.rect(screen, GRAY,pygame.Rect(self.pos[0], self.pos[1], 50, 50))
             center = (self.pos[0] + 25, self.pos[1] + 25)
