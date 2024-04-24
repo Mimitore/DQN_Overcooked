@@ -30,8 +30,10 @@ class InteractionManager:
             else:
                 print("Le légume n'est pas coupé ou bien la marmite est remplie.")
                 return "keep"
-
-
+        
+        elif isinstance(item,Item) and isinstance(obj, CuttingBoard):
+            obj.item = item
+            return 'drop'
         elif isinstance(item, Item) and isinstance(obj,CookingStation): 
             obj.checkBlocked(interactables)
 

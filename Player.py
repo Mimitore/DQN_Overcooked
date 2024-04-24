@@ -120,4 +120,3 @@ class Player:
                     obj.item.cut()
                     print("the vegetable is cut")
                     break
-                
