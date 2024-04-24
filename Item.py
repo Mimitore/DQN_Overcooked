@@ -37,11 +37,14 @@ class Item:
             pygame.draw.circle(screen, BLACK, center, 10,3) 
     
     def isDropable(self, new_pos, interactables):
-            dropable = "drop"
+            dropable = ["drop"]
             from InteractionManager import InteractionManager
             for obj in interactables:
                 if obj.pos == new_pos:
-                    dropable = InteractionManager().process_interaction(self, obj)
-
-            
-            return dropable
+                    dropable.append(InteractionManager().process_interaction(self, obj,interactables))
+                    
+            if "del" in dropable:
+                return 'del'
+            elif "keep" in dropable:
+                return "keep"
+            return "drop"

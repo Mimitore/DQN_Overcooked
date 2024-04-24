@@ -64,6 +64,7 @@ while running:
     player.update_position(keys, obstacles)
 
     if keys[pygame.K_SPACE]:
+        player.update_item_position()
         if player.held_item:
                 # Poser le pot sur la cuisinière
                 if player.is_facing(stove):
@@ -90,9 +91,10 @@ while running:
 
     stove.draw(screen)
     cuttingboard.draw(screen)
+    platecrate.draw(screen)
     onioncrate.draw(screen)
     pot.draw(screen)
-    platecrate.draw(screen)
+    
 
     # MàJ
     pygame.display.flip()

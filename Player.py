@@ -1,10 +1,5 @@
 import pygame
-from Item import Item
-from CookingStation import CookingStation
-from Vegetable import Vegetable
-from Container import Container
-from Cookware import Cookware
-from InteractionManager import InteractionManager
+
 
 
 class Player:
@@ -49,6 +44,7 @@ class Player:
     
     def move(self, dx, dy, obstacles):
         # Copie temporaire pour tester le déplacement
+        
         temp_rect = self.rect.copy()
         temp_rect.x += dx
         temp_rect.y += dy
@@ -84,6 +80,7 @@ class Player:
             self.held_item = item
             print(f"Le joueur prend un {item}.")
             self.update_item_position()
+            print(item.pos)
         else:
             print(f"Le joueur tient déjà un {self.held_item}.")
 
@@ -93,11 +90,11 @@ class Player:
             self.held_item.update_position(self.rect[0], self.rect[1])
 
     def drop_item(self):
-        if self.held_item:
-            print(f"Le joueur lâche un {self.held_item}.")
+        from InteractionManager import InteractionManager
+        if self.held_item!=None:
             
             if(self.direction):
-                offset = InteractionManager.calculate_offset(self.direction)
+                offset = InteractionManager().calculate_offset(self.direction)
 
             new_pos = (self.rect[0] + offset[0], self.rect[1] + offset[1])
 
@@ -106,9 +103,11 @@ class Player:
 
             if status == "drop":
                 self.held_item.pos = new_pos
+                print(f"Le joueur lâche un {self.held_item}.")
                 self.held_item = None
-
             elif status == "del":
                 self.held_item.crate.removeItem(self.held_item)
                 self.held_item = None
-        
+
+            else:
+                print('keep ur object')

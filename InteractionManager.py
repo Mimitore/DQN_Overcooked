@@ -5,6 +5,9 @@ from CookingStation import CookingStation
 
 class InteractionManager:
 
+    def __init__(self):
+        self.interactables = []
+        
     @staticmethod
     def calculate_offset(direction):
         offsets = {
@@ -16,7 +19,7 @@ class InteractionManager:
         return offsets.get(direction, (0, 0))
 
 
-    def process_interaction(self,item, obj):
+    def process_interaction(self,item, obj,interactables):
         if isinstance(item, Vegetable) and isinstance(obj, Cookware):
             if item.isCut:  
                 print('c\'est dans la marmite')
@@ -27,6 +30,8 @@ class InteractionManager:
                 return "keep"
 
         elif isinstance(item, Item) and isinstance(obj,CookingStation): 
+            obj.checkBlocked(interactables)
+            
             if obj.is_blocked:
                 print("Non, c'est bloqué D:<")
                 return "keep"

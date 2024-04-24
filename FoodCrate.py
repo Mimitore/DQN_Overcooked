@@ -14,8 +14,8 @@ class FoodCrate(CookingStation):
             for item in self.items:
                 item.draw(screen)
 
-    def checkBlocked(self, player):
-        return super().checkBlocked(player)
+    def checkBlocked(self, interactables):
+        return super().checkBlocked(interactables)
     
     def removeItem(self,item):
         if item in self.items:
@@ -25,7 +25,7 @@ class FoodCrate(CookingStation):
         super().interact(player)
         
         if player.is_facing(self):
-            if not self.is_blocked:
+            if not self.is_blocked: # Si la caisse n'a pas d'objet sur lui qui le bloque
                 if player.held_item is None:
                     new_item = Vegetable(self.pos,self.item_type,self)
                     player.take_item(new_item)

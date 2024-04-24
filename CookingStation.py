@@ -14,19 +14,22 @@ class CookingStation:
     def setPos(self,pos):
         self.pos = pos    
 
-    def checkBlocked(self,player):
+    def checkBlocked(self, interactables):
         current_time = pygame.time.get_ticks()
-        if current_time - self.last_check_time > 800:
+        if current_time - self.last_check_time >400:
             self.last_check_time = current_time
-            for obj in player.interactables:
-                if obj.pos == self.pos and obj != self:
-                    self.is_blocked = True 
-                    break
             self.is_blocked = False
+            for obj in interactables:
+                if obj.pos == self.pos and obj != self:
+                    self.is_blocked = True
+                    print(f"{self} is blocked by {obj}")
+                    break
+            if not self.is_blocked:
+                print(f"{self} is not blocked")
 
     def interact(self, player):
         """ Méthode pour gérer l'interaction d'un joueur avec la station """
-        self.checkBlocked(player)
+        self.checkBlocked(player.interactables)
         if player.is_facing(self):
             print(f"Le joueur {player} interagit avec la station à la position {self.pos}.")
 
