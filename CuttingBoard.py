@@ -17,9 +17,9 @@ class CuttingBoard(CookingStation):
     def draw(self, screen):
             super().draw(screen) 
 
-    def interact(self, player):
-        super().interact(player)
-        for obj in player.interactables:
+    def interact(self, map):
+        super().interact(map)
+        for obj in map.objects:
              if obj.pos == self.pos and obj!=self:
                 self.item = obj
                 print("theres an object on the cuttingboard")

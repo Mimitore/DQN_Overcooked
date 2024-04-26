@@ -11,29 +11,31 @@ class FoodCrate(CookingStation):
 
     def draw(self, screen):
             super().draw(screen) 
-            for item in self.items:
-                item.draw(screen)
+            # for item in self.items:
+            #     item.draw(screen)
 
-    def checkBlocked(self, interactables):
-        return super().checkBlocked(interactables)
+    def checkBlocked(self, map):
+        return super().checkBlocked(map)
     
     def removeItem(self,item):
         if item in self.items:
+            print("item removed")
             self.items.remove(item)
+            print(self.items)
 
-    def interact(self, player):
-        super().interact(player)
+    def interact(self, map):
+        super().interact(map)
         
-        if player.is_facing(self):
+        if map.player.is_facing(self):
             if not self.is_blocked: # Si la caisse n'a pas d'objet sur lui qui le bloque
-                if player.held_item is None:
+                if map.player.held_item is None:
                     new_item = Vegetable(self.pos,self.item_type,self)
-                    player.take_item(new_item)
+                    map.player.take_item(new_item)
                     self.items.append(new_item)
-                    player.interactables.append(new_item)
+                    map.objects.append(new_item)
                     print(f"Le joueur a pris un {new_item} de la caisse.")
                 else:
-                    print(f"Le joueur tient déjà un {player.held_item}.")
+                    print(f"Le joueur tient déjà un {map.player.held_item}.")
             
             else:
                 print("Un objet bloque la caisse, impossible de prendre un item.")

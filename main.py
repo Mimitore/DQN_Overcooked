@@ -13,6 +13,9 @@ from InteractionManager import InteractionManager
 from config import BLACK,WHITE,ONION,GRAY
 from PlateCrate import PlateCrate
 from ServiceStation import ServiceStation
+from Map import Map
+
+
 pygame.init()
 
 # Taille de la fenêtre
@@ -23,35 +26,25 @@ pygame.display.set_caption('Overcooked')
 clock = pygame.time.Clock()
 
 # Positions initiales 
-player = Player(50,50)
+player = Player((50,50))
 
 
-# Création des objets 
-stove = HotStove((0, 0))
-cuttingboard = CuttingBoard((450,450))
-onioncrate = FoodCrate((0,450),"onion")
-pot = Cookware((0,0),"pot")
-platecrate = PlateCrate((100,200),"plate")
-servicestation = ServiceStation((450,0),"service")
+game_map = Map(player)
 
-player.interactables = [onioncrate, cuttingboard, stove, pot,platecrate,servicestation]
+# Ajout des objets à la carte
+game_map.add_object(HotStove((0, 0)))
+game_map.add_object(CuttingBoard((450,450)))
+game_map.add_object(FoodCrate((0,450), "onion"))
+game_map.add_object(Cookware((0,0), "pot"))
+game_map.add_object(PlateCrate((100,200), "plate"))
+game_map.add_object(ServiceStation((450,0), "service"))
 
-# Définition des collisions 
-obstacles = [
-    pygame.Rect(0, 0, 50,50),
-    pygame.Rect(0,450,50,50),
-    pygame.Rect(450,450,50,50),
-    pygame.Rect(100,200,50,50),
-    pygame.Rect(450,0,50,50)
-]
-
-
-def check_collision(player_rect, obstacles):
-    for obstacle in obstacles:
-        if player_rect.colliderect(obstacle):
-            return True
-    return False
-
+# Ajouter des obstacles
+game_map.add_object(pygame.Rect(0, 0, 50, 50))
+game_map.add_object(pygame.Rect(0, 450, 50, 50))
+game_map.add_object(pygame.Rect(450, 450, 50, 50))
+game_map.add_object(pygame.Rect(100, 200, 50, 50))
+game_map.add_object(pygame.Rect(450, 0, 50, 50))
 
 running = True
 while running:
@@ -60,34 +53,26 @@ while running:
             running = False
 
 
-
     # Gestion des touches
     keys = pygame.key.get_pressed()
-    player.update_position(keys, obstacles)
+    player.update_position(keys, game_map.obstacles)
 
     if keys[pygame.K_SPACE]:
         player.update_item_position()
         if player.held_item:
                 # Si le joueur tient un objet et appuie sur espace, relâcher cet objet
-                player.drop_item()
+                player.drop_item(game_map)
         else:
             # Sinon, interagir avec les objets environnants pour en prendre un
-            player.interact()
+            player.interact(game_map)
 
     if keys[pygame.K_c]:
-        player.cut()
+        player.cut(game_map)
 
     # Interface graphique
     screen.fill(BLACK)
-    pygame.draw.rect(screen, WHITE, player.rect) #player
-
-    stove.draw(screen)
-    servicestation.draw(screen)
-    cuttingboard.draw(screen)
-    platecrate.draw(screen)
-    onioncrate.draw(screen)
-    pot.draw(screen)
-    
+    pygame.draw.rect(screen, WHITE, pygame.Rect(player.pos[0], player.pos[1], 50, 50)) #player
+    game_map.draw(screen)
 
     # MàJ
     pygame.display.flip()

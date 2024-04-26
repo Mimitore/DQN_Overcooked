@@ -7,8 +7,8 @@ class Cookware(Container):
         self.isWarm = False
         self.full = False
 
-    def isOnStove(self, interactables):
-        for obj in interactables:
+    def isOnStove(self, map):
+        for obj in map.objects:
             if isinstance(obj, HotStove):
                 if obj.pos == self.pos:
                     return True
@@ -24,8 +24,8 @@ class Cookware(Container):
     def update_position(self, player_x, player_y):
         return super().update_position(player_x, player_y)
     
-    def interact(self, player):
-        return super().interact(player)
+    def interact(self, map):
+        return super().interact(map)
 
     
     def add_ingredient(self, item):
@@ -37,11 +37,11 @@ class Cookware(Container):
     def addSoup(self, screen):
         return super().addSoup(screen)
     
-    def isDropable(self, new_pos, interactables):
-        return super().isDropable(new_pos, interactables)
+    def isDropable(self, new_pos, map):
+        return super().isDropable(new_pos, map)
     
-    def cooking(self,interactables):
-        if self.isOnStove(interactables):  
+    def cooking(self,map):
+        if self.isOnStove(map):  
             if self.isFull():
             
                 self.isWarm = True

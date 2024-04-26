@@ -21,5 +21,5 @@ class Vegetable(Item):
     def draw(self, screen):
             super().draw(screen) 
 
-    def isDropable(self, new_pos, interactables):
-        return super().isDropable(new_pos,interactables)
+    def isDropable(self, new_pos, map):
+        return super().isDropable(new_pos,map)

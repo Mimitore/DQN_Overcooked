@@ -20,7 +20,9 @@ class Container(Item):
             pygame.draw.circle(screen, WHITE, center, 25)  
             pygame.draw.circle(screen, BLACK, center, 25,3)  
             pygame.draw.circle(screen, BLACK, center, 20,1) 
-
+        if self.isFull():
+            self.addSoup(screen)
+            
     def addSoup(self,screen):
         center = (self.pos[0] + 25, self.pos[1] + 25)
         pygame.draw.circle(screen,ONION,center,10)
@@ -28,8 +30,8 @@ class Container(Item):
     def add_ingredient(self,item):
         self.ingredients.append(item)
 
-    def isDropable(self, new_pos, interactables):
-        return super().isDropable(new_pos, interactables)
+    def isDropable(self, new_pos, map):
+        return super().isDropable(new_pos, map)
 
     def isFull(self):
         if len(self.ingredients)==2:

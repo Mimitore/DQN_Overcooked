@@ -22,12 +22,13 @@ class InteractionManager:
         return offsets.get(direction, (0, 0))
 
     @staticmethod
-    def process_interaction(item, obj,interactables):
+    def process_interaction(item, obj,map):
         if isinstance(item, Vegetable) and isinstance(obj, Cookware):
             if item.isCut and not obj.isFull():  
                 print('c\'est dans la marmite')
                 obj.add_ingredient(item)
-                obj.cooking(interactables)
+                obj.cooking(map)
+                map.remove_object(item)
                 return "del"
             else:
                 print("Le légume n'est pas coupé ou bien la marmite est remplie.")
@@ -41,6 +42,7 @@ class InteractionManager:
             # Verification si c'est un plat à servir sur le comptoir
             if obj.checkPlate(item):
                 print('Un service est fait')
+                map.remove_object(item)
                 return "del"
             else:
                 print('plat non valide')
@@ -55,7 +57,7 @@ class InteractionManager:
                 return "keep"
 
         elif isinstance(item, Item) and isinstance(obj,CookingStation): 
-            obj.checkBlocked(interactables)
+            obj.checkBlocked(map)
 
             if obj.is_blocked:
                 print("Non, c'est bloqué D:<")
