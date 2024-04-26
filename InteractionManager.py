@@ -7,9 +7,6 @@ from Container import Container
 from ServiceStation import ServiceStation
 
 class InteractionManager:
-
-    def __init__(self):
-        self.interactables = []
         
     @staticmethod
     def calculate_offset(direction):
@@ -43,6 +40,7 @@ class InteractionManager:
             if obj.checkPlate(item):
                 print('Un service est fait')
                 map.remove_object(item)
+                map.score.update_score()
                 return "del"
             else:
                 print('plat non valide')

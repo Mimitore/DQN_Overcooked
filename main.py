@@ -1,20 +1,15 @@
 import pygame # type: ignore
 import sys
-from CookingStation import CookingStation
 from HotStove import HotStove
 from CuttingBoard import CuttingBoard
 from FoodCrate import FoodCrate
 from Player import Player
-from Item import Item
-from Vegetable import Vegetable
-from Container import Container
 from Cookware import Cookware
-from InteractionManager import InteractionManager
 from config import BLACK,WHITE,ONION,GRAY
 from PlateCrate import PlateCrate
 from ServiceStation import ServiceStation
 from Map import Map
-
+from ScoreBoard import ScoreBoard
 
 pygame.init()
 
@@ -27,23 +22,23 @@ clock = pygame.time.Clock()
 
 # Positions initiales 
 player = Player((50,50))
-
-game_map = Map(player)
+score = ScoreBoard()
+game_map = Map(player,score)
 
 # Ajout des objets à la carte
-game_map.add_object(HotStove((0, 0)))
+game_map.add_object(HotStove((0, 50)))
 game_map.add_object(CuttingBoard((450,450)))
 game_map.add_object(FoodCrate((0,450), "onion"))
-game_map.add_object(Cookware((0,0), "pot"))
+game_map.add_object(Cookware((0,50), "pot"))
 game_map.add_object(PlateCrate((100,200), "plate"))
-game_map.add_object(ServiceStation((450,0), "service"))
+game_map.add_object(ServiceStation((450,50), "service"))
 
 # Ajouter des obstacles
-game_map.add_object(pygame.Rect(0, 0, 50, 50))
+game_map.add_object(pygame.Rect(0, 50, 50, 50))
 game_map.add_object(pygame.Rect(0, 450, 50, 50))
 game_map.add_object(pygame.Rect(450, 450, 50, 50))
 game_map.add_object(pygame.Rect(100, 200, 50, 50))
-game_map.add_object(pygame.Rect(450, 0, 50, 50))
+game_map.add_object(pygame.Rect(450, 50, 50, 50))
 
 running = True
 while running:
