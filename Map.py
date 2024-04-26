@@ -14,11 +14,13 @@ class Map:
 
     def remove_object(self,obj):
         self.objects.remove(obj)
-        
+
     def draw(self, screen):
+        self.player.draw(screen)
         for obj in self.objects:
             if hasattr(obj, 'draw'):
                 obj.draw(screen)  # Appelle la méthode draw de chaque objet si elle existe
+        
 
     def check_collisions(self, player_rect):
         for obstacle in self.obstacles:

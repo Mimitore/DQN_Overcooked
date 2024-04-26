@@ -28,7 +28,6 @@ clock = pygame.time.Clock()
 # Positions initiales 
 player = Player((50,50))
 
-
 game_map = Map(player)
 
 # Ajout des objets à la carte
@@ -71,7 +70,6 @@ while running:
 
     # Interface graphique
     screen.fill(BLACK)
-    pygame.draw.rect(screen, WHITE, pygame.Rect(player.pos[0], player.pos[1], 50, 50)) #player
     game_map.draw(screen)
 
     # MàJ

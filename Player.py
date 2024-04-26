@@ -1,16 +1,14 @@
 import pygame
 from Vegetable import Vegetable
 from CuttingBoard import CuttingBoard
-
+from config import WHITE
 
 class Player:
     def __init__(self, pos):
         self.pos = pos
-        #self.rect = pygame.Rect(pos[0], pos[1], 50, 50)
         self.held_item = None
         self.direction = "down"
         self.last_interact_time = None
-        #self.interactables = []
 
     def getPos(self):
         return (self.pos[0],self.pos[1])
@@ -112,3 +110,7 @@ class Player:
                     obj.item.cut()
                     print("the vegetable is cut")
                     break
+
+
+    def draw(self, screen):
+        pygame.draw.rect(screen, WHITE, pygame.Rect(self.pos[0], self.pos[1], 50, 50))
