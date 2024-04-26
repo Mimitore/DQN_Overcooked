@@ -49,7 +49,6 @@ class Player:
         if temp_rect.x >= 0 and temp_rect.x <= 450 and temp_rect.y >= 0 and temp_rect.y <= 450:
             if not any(temp_rect.colliderect(ob) for ob in obstacles):
                 self.pos = temp_rect[0],temp_rect[1]
-                #self.rect = temp_rect
         self.update_item_position()
 
     def update_position(self, keys, obstacles):
@@ -89,13 +88,10 @@ class Player:
     def drop_item(self,map):
         from InteractionManager import InteractionManager
         if self.held_item!=None:
-            
             if(self.direction):
                 offset = InteractionManager().calculate_offset(self.direction)
 
             new_pos = (self.pos[0] + offset[0], self.pos[1] + offset[1])
-
-            
             status = self.held_item.isDropable(new_pos,map)
 
             if status == "drop":
@@ -104,7 +100,6 @@ class Player:
                 self.held_item = None
                 
             elif status == "del":
-                self.held_item.crate.removeItem(self.held_item)
                 self.held_item = None
 
             else:

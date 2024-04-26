@@ -6,15 +6,11 @@ import pygame
 class PlateCrate(CookingStation):
     def __init__(self,pos,shape):
         super().__init__(pos,shape)
-        self.items = []
+        # self.items = []
 
 
     def draw(self, screen):
             super().draw(screen) 
-            for item in self.items:
-                item.draw(screen)
-                if item.full:
-                    item.addSoup(screen)
 
             pygame.draw.rect(screen, GRAY,pygame.Rect(self.pos[0], self.pos[1], 50, 50))
             center = (self.pos[0] + 25, self.pos[1] + 25)
@@ -26,9 +22,6 @@ class PlateCrate(CookingStation):
     def checkBlocked(self, map):
         return super().checkBlocked(map)
     
-    def removeItem(self,item):
-        if item in self.items:
-            self.items.remove(item)
 
     def interact(self, map):
         super().interact(map)
@@ -37,7 +30,7 @@ class PlateCrate(CookingStation):
                 if map.player.held_item is None:
                     new_item = Container(self.pos,"plate",self)
                     map.player.take_item(new_item)
-                    self.items.append(new_item)
+                    # self.items.append(new_item)
                     map.objects.append(new_item)
                     print(f"Le joueur a pris un {new_item} de la caisse.")
                 else:

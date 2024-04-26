@@ -15,7 +15,6 @@ class ServiceStation(CookingStation):
     
     def checkPlate(self,plate):
         if plate.isFull():
-            plate.crate.removeItem(plate)
             return True
         else:
             return False
