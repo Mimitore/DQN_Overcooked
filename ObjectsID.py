@@ -1,0 +1,10 @@
+class ObjectsID:
+    PLAYER = 1
+    HOT_STOVE = 2
+    CUTTING_BOARD = 3
+    FOOD_CRATE_ONION = 4
+    COOKWARE = 5
+    PLATE_CRATE = 6
+    SERVICE_STATION = 7
+    ONION = 8 
+    PLATE = 9

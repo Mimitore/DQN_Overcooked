@@ -1,11 +1,10 @@
 from CookingStation import CookingStation
 from Vegetable import Vegetable
-import pygame
+from ObjectsID import ObjectsID
 
 class CuttingBoard(CookingStation):
     def __init__(self,pos):
-        super().__init__(pos,"cuttingboard")
-        self.item = None
+        super().__init__(pos,"cuttingboard",ObjectsID.CUTTING_BOARD)
 
     def cut_item(self):
         if isinstance(self.item, Vegetable):  
@@ -25,3 +24,6 @@ class CuttingBoard(CookingStation):
                 print("theres an object on the cuttingboard")
                 print(obj)
                 break
+             
+    def get_state(self):
+        return super().get_state(self)

@@ -1,11 +1,14 @@
 import pygame
 from config import GRAY,BLACK,WHITE,ONION
+from GameObject import GameObject
 
-class CookingStation:
-    def __init__(self, pos, shape):
+class CookingStation(GameObject):
+    def __init__(self, pos, shape,type_id):
+        super().__init__(type_id) 
         self.pos = pos
         self.shape = shape
         self.is_blocked = False
+        self.item = None
         self.last_check_time = pygame.time.get_ticks()
 
     def getPos(self):
@@ -19,8 +22,10 @@ class CookingStation:
         if current_time - self.last_check_time >400:
             self.last_check_time = current_time
             self.is_blocked = False
+            self.item = None
             for obj in map.objects:
                 if obj.pos == self.pos and obj != self:
+                    self.item = obj
                     self.is_blocked = True
                     print(f"{self} is blocked by {obj}")
                     break
@@ -50,3 +55,6 @@ class CookingStation:
         elif self.shape == "table":
             pygame.draw.rect(screen, WHITE, pygame.Rect(self.pos[0], self.pos[1], 50, 50))
 
+    def getState(self):
+        return super().getState(self) + [self.pos,self.item]
+    

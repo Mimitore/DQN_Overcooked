@@ -1,10 +1,11 @@
 from CookingStation import CookingStation
 import pygame
 from config import WHITE,BLACK,GRAY
+from ObjectsID import ObjectsID
 
 class ServiceStation(CookingStation):
     def __init__(self, pos, shape):
-        super().__init__(pos, shape)
+        super().__init__(pos, shape,ObjectsID.SERVICE_STATION)
 
 
     def draw(self, screen):
@@ -19,5 +20,6 @@ class ServiceStation(CookingStation):
         else:
             return False
 
-    
+    def getState(self):
+        return super().getState(self)
     

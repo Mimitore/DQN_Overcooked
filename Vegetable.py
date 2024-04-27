@@ -2,11 +2,11 @@ import pygame
 from Item import Item
 from Cookware import Cookware
 from config import GRAY,BLACK,WHITE,ONION
-
+from ObjectsID import ObjectsID
 
 class Vegetable(Item):
     def __init__(self, pos, shape,crate):
-        super().__init__(pos, shape) 
+        super().__init__(pos, shape,ObjectsID.ONION) 
         self.isCut = False
         self.isCooked = False
         self.crate = crate
@@ -23,3 +23,6 @@ class Vegetable(Item):
 
     def isDropable(self, new_pos, map):
         return super().isDropable(new_pos,map)
+
+    def getState(self):
+        return super().getState(self) + [self.isCut]

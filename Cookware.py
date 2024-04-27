@@ -1,9 +1,11 @@
 from Container import Container
 from HotStove import HotStove
 from config import GRAY
+from ObjectsID import ObjectsID
+
 class Cookware(Container):
-    def __init__(self, pos, shape,crate=None):
-        super().__init__(pos, shape,crate)
+    def __init__(self, pos, shape,crate=None,type_id = ObjectsID.COOKWARE):
+        super().__init__(pos, shape,crate,type_id)
         self.isWarm = False
         self.full = False
 
@@ -54,3 +56,6 @@ class Cookware(Container):
 
     def clearSoup(self, screen, bg):
         return super().clearSoup(screen, bg)
+    
+    def getState(self):
+        return super().getState(self) + [self.isWarm]

@@ -3,10 +3,12 @@ from Vegetable import Vegetable
 from CuttingBoard import CuttingBoard
 from config import WHITE
 from Actions import Actions
+from GameObject import GameObject
+from ObjectsID import ObjectsID
 
-
-class Player:
-    def __init__(self, pos):
+class Player(GameObject):
+    def __init__(self, pos,type_id = ObjectsID.PLAYER):
+        super().__init__(type_id)
         self.pos = pos
         self.held_item = None
         self.direction = "down"
@@ -18,7 +20,6 @@ class Player:
     def setPos(self,x,y):
         self.pos[0]= x
         self.pos[1] = y
-
 
     def setDirection(self, new_direction):
         self.direction = new_direction
@@ -52,34 +53,33 @@ class Player:
         self.update_item_position()
 
 
-    def execute_actions(self, keys, game_map):
-        # Gestion des mouvements
+    def execute_actions(self, action, game_map):
         player_speed = 50
-        if keys[pygame.K_LEFT]:
+
+        # Mouvement
+        if action == Actions.LEFT:
             self.move(-player_speed, 0, game_map.obstacles)
             self.setDirection("left")
-        elif keys[pygame.K_RIGHT]:
+        elif action == Actions.RIGHT:
             self.move(player_speed, 0, game_map.obstacles)
             self.setDirection("right")
-        elif keys[pygame.K_UP]:
+        elif action == Actions.UP:
             self.move(0, -player_speed, game_map.obstacles)
             self.setDirection("up")
-        elif keys[pygame.K_DOWN]:
+        elif action == Actions.DOWN:
             self.move(0, player_speed, game_map.obstacles)
             self.setDirection("down")
 
-        # Gestion des interactions
-        if keys[pygame.K_SPACE]:
+        # Interactions
+        elif action == Actions.SPACE:
             self.update_item_position()
             if self.held_item:
-                # Relâcher un objet
                 self.drop_item(game_map)
             else:
-                # Interagir avec l'environnement
                 self.interact(game_map)
 
-        # Gestion de la découpe
-        if keys[pygame.K_c]:
+        # Découpe
+        elif action == Actions.CUT:
             self.cut(game_map)
 
 
@@ -134,3 +134,8 @@ class Player:
 
     def draw(self, screen):
         pygame.draw.rect(screen, WHITE, pygame.Rect(self.pos[0], self.pos[1], 50, 50))
+
+    def getState(self):
+        return super().getState(self)+[self.pos,self.held_item]
+
+    

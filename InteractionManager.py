@@ -35,13 +35,17 @@ class InteractionManager:
             obj.item = item
             return 'drop'
         
-        elif isinstance(item,Container) and isinstance(obj, ServiceStation):
+        elif isinstance(item,Item) and isinstance(obj, ServiceStation):
             # Verification si c'est un plat à servir sur le comptoir
-            if obj.checkPlate(item):
-                print('Un service est fait')
-                map.remove_object(item)
-                map.score.update_score()
-                return "del"
+            if isinstance(item,Container) and not isinstance(item,Cookware):
+                if obj.checkPlate(item):
+                    print('Un service est fait')
+                    map.remove_object(item)
+                    map.score.update_score()
+                    return "del"
+                else:
+                    print('plat non valide')
+                    return "keep"
             else:
                 print('plat non valide')
                 return "keep"

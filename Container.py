@@ -1,10 +1,11 @@
 from Item import Item
 import pygame
 from config import WHITE, BLACK,GRAY,ONION
+from ObjectsID import ObjectsID
 
 class Container(Item):
-    def __init__(self, pos, shape,crate):
-        super().__init__(pos, shape)
+    def __init__(self, pos, shape,crate, type_id = ObjectsID.PLATE):
+        super().__init__(pos, shape,type_id)
         self.ingredients = []
         self.full = False
         self.crate = crate
@@ -56,3 +57,7 @@ class Container(Item):
         if not self.full:
             center = (self.pos[0] + 25, self.pos[1] + 25)
             pygame.draw.circle(screen, bg, center, 10)
+
+
+    def getState(self):
+        return super().getState(self) + [self.full]

@@ -1,10 +1,11 @@
 import pygame
-
+from GameObject import GameObject
 
 from config import GRAY,BLACK,WHITE,ONION
 
-class Item:
-    def __init__(self, pos, shape):
+class Item(GameObject):
+    def __init__(self, pos, shape,type_id):
+        super().__init__(type_id)
         self.pos = pos
         self.shape = shape
 
@@ -16,8 +17,6 @@ class Item:
 
     def update_position(self, player_x, player_y):
         self.pos = (player_x , player_y)
-       
-
 
     def interact(self, map):
         """ Méthode pour gérer l'interaction d'un joueur avec l'item """
@@ -49,3 +48,6 @@ class Item:
             elif "keep" in dropable:
                 return "keep"
             return "drop"
+    
+    def getState(self):
+        return super().getState(self) + [self.pos]

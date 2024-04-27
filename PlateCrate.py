@@ -3,11 +3,12 @@ from Player import Player
 from Container import Container
 from config import WHITE,BLACK,GRAY
 import pygame
+from ObjectsID import ObjectsID
+
 class PlateCrate(CookingStation):
     def __init__(self,pos,shape):
-        super().__init__(pos,shape)
-        # self.items = []
-
+        super().__init__(pos,shape, ObjectsID.PLATE_CRATE)
+       
 
     def draw(self, screen):
             super().draw(screen) 
@@ -39,3 +40,5 @@ class PlateCrate(CookingStation):
             else:
                 print("Un objet bloque la caisse, impossible de prendre un item.")
          
+    def getState(self):
+        return super().getState()
