@@ -2,6 +2,8 @@ import pygame
 from Vegetable import Vegetable
 from CuttingBoard import CuttingBoard
 from config import WHITE
+from Actions import Actions
+
 
 class Player:
     def __init__(self, pos):
@@ -49,20 +51,38 @@ class Player:
                 self.pos = temp_rect[0],temp_rect[1]
         self.update_item_position()
 
-    def update_position(self, keys, obstacles):
+
+    def execute_actions(self, keys, game_map):
+        # Gestion des mouvements
         player_speed = 50
         if keys[pygame.K_LEFT]:
-            self.move(-player_speed, 0, obstacles)
+            self.move(-player_speed, 0, game_map.obstacles)
             self.setDirection("left")
-        if keys[pygame.K_RIGHT]:
-            self.move(player_speed, 0, obstacles)
+        elif keys[pygame.K_RIGHT]:
+            self.move(player_speed, 0, game_map.obstacles)
             self.setDirection("right")
-        if keys[pygame.K_UP]:
-            self.move(0, -player_speed, obstacles)
+        elif keys[pygame.K_UP]:
+            self.move(0, -player_speed, game_map.obstacles)
             self.setDirection("up")
-        if keys[pygame.K_DOWN]:
-            self.move(0, player_speed, obstacles)
+        elif keys[pygame.K_DOWN]:
+            self.move(0, player_speed, game_map.obstacles)
             self.setDirection("down")
+
+        # Gestion des interactions
+        if keys[pygame.K_SPACE]:
+            self.update_item_position()
+            if self.held_item:
+                # Relâcher un objet
+                self.drop_item(game_map)
+            else:
+                # Interagir avec l'environnement
+                self.interact(game_map)
+
+        # Gestion de la découpe
+        if keys[pygame.K_c]:
+            self.cut(game_map)
+
+
 
     def interact(self,map):
         for obj in map.objects:

@@ -1,11 +1,11 @@
-import pygame # type: ignore
+import pygame
 import sys
 from HotStove import HotStove
 from CuttingBoard import CuttingBoard
 from FoodCrate import FoodCrate
 from Player import Player
 from Cookware import Cookware
-from config import BLACK,WHITE,ONION,GRAY
+from config import BLACK
 from PlateCrate import PlateCrate
 from ServiceStation import ServiceStation
 from Map import Map
@@ -49,19 +49,8 @@ while running:
 
     # Gestion des touches
     keys = pygame.key.get_pressed()
-    player.update_position(keys, game_map.obstacles)
+    player.execute_actions(keys, game_map)
 
-    if keys[pygame.K_SPACE]:
-        player.update_item_position()
-        if player.held_item:
-                # Si le joueur tient un objet et appuie sur espace, relâcher cet objet
-                player.drop_item(game_map)
-        else:
-            # Sinon, interagir avec les objets environnants pour en prendre un
-            player.interact(game_map)
-
-    if keys[pygame.K_c]:
-        player.cut(game_map)
 
     # Interface graphique
     screen.fill(BLACK)
