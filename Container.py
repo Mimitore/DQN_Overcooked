@@ -60,4 +60,4 @@ class Container(Item):
 
 
     def getState(self):
-        return super().getState(self) + [self.full]
+        return super().getState() + [self.full]

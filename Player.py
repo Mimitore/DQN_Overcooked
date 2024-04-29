@@ -184,7 +184,13 @@ class Player(GameObject):
         pygame.draw.rect(screen, WHITE, pygame.Rect(self.pos[0], self.pos[1], 50, 50))
 
     def getState(self):
-        return super().getState(self)+[self.pos,self.held_item]
+        if self.held_item is not None:
+            item = self.held_item.type_id
+        else:
+            item = None
+
+        return super().getState() + [self.pos[0], self.pos[1],item] 
+
 
     def reset(self):
         self.pos = list(self.initial_position)

@@ -11,4 +11,4 @@ class HotStove(CookingStation):
             super().draw(screen) 
 
     def getState(self):
-        return super().getState(self)
+        return super().getState()

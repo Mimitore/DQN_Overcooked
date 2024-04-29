@@ -58,4 +58,4 @@ class Cookware(Container):
         return super().clearSoup(screen, bg)
     
     def getState(self):
-        return super().getState(self) + [self.isWarm]
+        return super().getState() + [self.isWarm]

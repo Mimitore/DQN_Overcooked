@@ -56,5 +56,11 @@ class CookingStation(GameObject):
             pygame.draw.rect(screen, WHITE, pygame.Rect(self.pos[0], self.pos[1], 50, 50))
 
     def getState(self):
-        return super().getState(self) + [self.pos,self.item]
+        if self.item is not None:
+            item_state = [self.item.type_id]
+        else:
+            item_state = [None] 
+
+        return super().getState() + [self.pos[0], self.pos[1]] + item_state
+
     

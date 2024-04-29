@@ -25,4 +25,4 @@ class Vegetable(Item):
         return super().isDropable(new_pos,map)
 
     def getState(self):
-        return super().getState(self) + [self.isCut]
+        return super().getState() + [self.isCut]

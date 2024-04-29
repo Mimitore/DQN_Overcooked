@@ -21,5 +21,5 @@ class ServiceStation(CookingStation):
             return False
 
     def getState(self):
-        return super().getState(self)
+        return super().getState()
     

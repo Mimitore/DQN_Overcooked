@@ -18,7 +18,9 @@ class FoodCrate(CookingStation):
 
     def interact(self, map):
         super().interact(map)
-        
+        if not map.isAddable(Vegetable(self.pos,self.item_type,self),map.objects, ObjectsID.ONION):
+            print("impossible d'ajouter une assiette")
+            return
         if map.player.is_facing(self):
             if not self.is_blocked: # Si la caisse n'a pas d'objet sur lui qui le bloque
                 if map.player.held_item is None:

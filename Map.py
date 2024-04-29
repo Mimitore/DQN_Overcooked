@@ -10,6 +10,16 @@ class Map:
         self.score = score
         self.restricted_types = [ObjectsID.ONION, ObjectsID.PLATE]
 
+
+
+    def isAddable(self,obj,obj_list, target_type_id):
+        """
+        Verifie si tel obj peut etre ajouté dans le jeu ou non. Un tel obj de tel classe doit pas depasser au delà de 5
+        """
+
+        count = sum(1 for o in obj_list if getattr(o, 'type_id', None) == target_type_id)
+        return getattr(obj, 'type_id', None) == target_type_id and count < 5
+    
     def add_object(self, obj):
         if isinstance(obj, pygame.Rect):  # Si c'est un obstacle
             self.obstacles.append(obj)
@@ -20,7 +30,7 @@ class Map:
 
             # Vérifier si l'objet appartient à un type restreint et peut être ajouté
             if obj_type_id in self.restricted_types:
-                if isAddable(obj, self.objects, obj_type_id):
+                if self.isAddable(obj, self.objects, obj_type_id):
                     self.objects.append(obj)
                 else:
                     print(f"There's too many of {obj_type_id} already.")
@@ -53,11 +63,15 @@ class Map:
         return state
     
     def getState(self):
+        #Etat du joueur
+        state = self.player.getState()
+
+
         # Préparer les listes pour chaque type d'objet avec des espaces fixes
         max_items = 5
         onions = [None] * max_items
         plates = [None] * max_items
-        state = []
+        
         # Remplir les listes avec l'état des objets existants
         onion_count = 0
         plate_count = 0
@@ -72,27 +86,33 @@ class Map:
                     plates[plate_count] = obj.getState()
                     plate_count += 1
             else:
-                state.append(obj.getState())
+                state.extend(obj.getState())
         # Remplacement des None par une représentation par défaut pour les emplacements vides
-        default_onion_state = [0] * 3  
-        default_plate_state = [0] * 3 
-        onions = [state if state is not None else default_onion_state for state in onions]
-        plates = [state if state is not None else default_plate_state for state in plates]
+        default_onion_state = [0, 0, 0,0]  # Chaque onion a 3 caractéristiques
+        default_plate_state = [0, 0, 0,0]  # Chaque plate a 3 caractéristiques
 
-        state += onions + plates
-        return state
+        # Mise à jour des listes onions et plates pour remplacer les None par les valeurs par défaut
+        onions = [onion_state if onion_state is not None else default_onion_state for onion_state in onions]
+        plates = [plate_state if plate_state is not None else default_plate_state for plate_state in plates]
 
-def isAddable(obj,obj_list, target_type_id):
-    """
-    Verifie si tel obj peut etre ajouté dans le jeu ou non. Un tel obj de tel classe doit pas depasser au delà de 5
-    """
+        # Étendre state avec les éléments individuels des listes onions et plates
+        for onion_state in onions:
+            state.extend(onion_state)  # Étend chaque élément individuellement au lieu de sous-listes
 
-    count = sum(1 for o in obj_list if getattr(o, 'type_id', None) == target_type_id)
-    return getattr(obj, 'type_id', None) == target_type_id and count < 5
+        for plate_state in plates:
+            state.extend(plate_state)  # De même pour les plates
 
-def reset(self):
-    self.objects = []
-    self.obstacles = []
+        clean_state = [0 if x is None else x for x in state]
+        print(len(clean_state))
+        print(clean_state)
+        return clean_state
 
-    self.score.reset() 
-    self.player.reset()  
+
+
+    def reset(self):
+        self.objects = []
+        self.obstacles = []
+
+        self.score.reset() 
+        self.player.reset()  
+

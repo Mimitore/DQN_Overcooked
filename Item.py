@@ -52,4 +52,4 @@ class Item(GameObject):
             return "drop"
     
     def getState(self):
-        return super().getState(self) + [self.pos]
+        return super().getState() + [self.pos[0],self.pos[1]]
