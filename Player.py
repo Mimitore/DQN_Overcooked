@@ -7,9 +7,10 @@ from GameObject import GameObject
 from ObjectsID import ObjectsID
 
 class Player(GameObject):
-    def __init__(self, pos,type_id = ObjectsID.PLAYER):
+    def __init__(self, initial_position,type_id = ObjectsID.PLAYER):
         super().__init__(type_id)
-        self.pos = pos
+        self.initial_position = initial_position
+        self.pos = list(initial_position) 
         self.held_item = None
         self.direction = "down"
         self.last_interact_time = None
@@ -158,7 +159,7 @@ class Player(GameObject):
                 
             elif status == "del" or status == "tocookware" or status == "serv":
                 self.held_item = None
-                
+
                 if status == 'tocookware' or status == 'serv':
                     result = status
 
@@ -185,4 +186,8 @@ class Player(GameObject):
     def getState(self):
         return super().getState(self)+[self.pos,self.held_item]
 
+    def reset(self):
+        self.pos = list(self.initial_position)
+        self.direction = "down"
+        self.held_item = None
     

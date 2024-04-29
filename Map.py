@@ -82,10 +82,6 @@ class Map:
         state += onions + plates
         return state
 
-
-
-
-
 def isAddable(obj,obj_list, target_type_id):
     """
     Verifie si tel obj peut etre ajouté dans le jeu ou non. Un tel obj de tel classe doit pas depasser au delà de 5
@@ -93,3 +89,10 @@ def isAddable(obj,obj_list, target_type_id):
 
     count = sum(1 for o in obj_list if getattr(o, 'type_id', None) == target_type_id)
     return getattr(obj, 'type_id', None) == target_type_id and count < 5
+
+def reset(self):
+    self.objects = []
+    self.obstacles = []
+
+    self.score.reset() 
+    self.player.reset()  

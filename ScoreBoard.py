@@ -12,3 +12,6 @@ class ScoreBoard:
     def update_score(self, points=1):
         self.score += points
         print(f"Score updated: {self.score}")
+
+    def reset(self):
+        self.score = 0
