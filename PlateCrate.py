@@ -32,7 +32,7 @@ class PlateCrate(CookingStation):
                     new_item = Container(self.pos,"plate",self)
                     map.player.take_item(new_item)
                     # self.items.append(new_item)
-                    map.objects.append(new_item)
+                    map.add_object(new_item)
                     print(f"Le joueur a pris un {new_item} de la caisse.")
                 else:
                     print(f"Le joueur tient déjà un {map.player.held_item}.")
