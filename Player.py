@@ -53,36 +53,72 @@ class Player(GameObject):
         self.update_item_position()
 
 
+    def execute_human_actions(self, keys, game_map):
+        # Gestion des mouvements
+        player_speed = 50
+        if keys[pygame.K_LEFT]:
+            self.move(-player_speed, 0, game_map.obstacles)
+            self.setDirection("left")
+        elif keys[pygame.K_RIGHT]:
+            self.move(player_speed, 0, game_map.obstacles)
+            self.setDirection("right")
+        elif keys[pygame.K_UP]:
+            self.move(0, -player_speed, game_map.obstacles)
+            self.setDirection("up")
+        elif keys[pygame.K_DOWN]:
+            self.move(0, player_speed, game_map.obstacles)
+            self.setDirection("down")
+
+        # Gestion des interactions
+        if keys[pygame.K_SPACE]:
+            self.update_item_position()
+            if self.held_item:
+                # Relâcher un objet
+                self.drop_item(game_map)
+            else:
+                # Interagir avec l'environnement
+                self.interact(game_map)
+
+        # Gestion de la découpe
+        if keys[pygame.K_c]:
+            self.cut(game_map)
+
     def execute_actions(self, action, game_map):
+        result = ''
         player_speed = 50
 
         # Mouvement
         if action == Actions.LEFT:
             self.move(-player_speed, 0, game_map.obstacles)
             self.setDirection("left")
+            return 'move'
         elif action == Actions.RIGHT:
             self.move(player_speed, 0, game_map.obstacles)
             self.setDirection("right")
+            return 'move'
         elif action == Actions.UP:
             self.move(0, -player_speed, game_map.obstacles)
             self.setDirection("up")
+            return 'move'
         elif action == Actions.DOWN:
             self.move(0, player_speed, game_map.obstacles)
             self.setDirection("down")
+            return 'move'
 
         # Interactions
         elif action == Actions.SPACE:
             self.update_item_position()
             if self.held_item:
-                self.drop_item(game_map)
+                result = self.drop_item(game_map)
             else:
                 self.interact(game_map)
 
         # Découpe
         elif action == Actions.CUT:
-            self.cut(game_map)
+            if (self.cut(game_map)):
+                result = 'cut'
 
-
+        return result 
 
     def interact(self,map):
         for obj in map.objects:
@@ -105,6 +141,9 @@ class Player(GameObject):
 
     def drop_item(self,map):
         from InteractionManager import InteractionManager
+        
+        result = ''
+
         if self.held_item!=None:
             if(self.direction):
                 offset = InteractionManager().calculate_offset(self.direction)
@@ -117,11 +156,18 @@ class Player(GameObject):
                 print(f"Le joueur lâche un {self.held_item}.")
                 self.held_item = None
                 
-            elif status == "del":
+            elif status == "del" or status == "tocookware" or status == "serv":
                 self.held_item = None
+                
+                if status == 'tocookware' or status == 'serv':
+                    result = status
 
             else:
+                if status == 'toplate':
+                    result = status
                 print('keep ur object')
+
+        return result
 
     def cut(self,map):
         if self.held_item == None:
@@ -129,7 +175,8 @@ class Player(GameObject):
                 if isinstance(obj, CuttingBoard) and self.is_facing(obj) and isinstance(obj.item,Vegetable):
                     obj.item.cut()
                     print("the vegetable is cut")
-                    break
+                    return True
+        return False
 
 
     def draw(self, screen):

@@ -45,6 +45,8 @@ class Item(GameObject):
             # Ici on gère les priorités si jamais 2 interactions sont possibles    
             if "del" in dropable:
                 return 'del'
+            elif "toplate" in dropable:
+                return "toplate"
             elif "keep" in dropable:
                 return "keep"
             return "drop"

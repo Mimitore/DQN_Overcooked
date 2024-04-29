@@ -5,8 +5,8 @@ from config import GRAY,BLACK,WHITE,ONION
 from ObjectsID import ObjectsID
 
 class Vegetable(Item):
-    def __init__(self, pos, shape,crate):
-        super().__init__(pos, shape,ObjectsID.ONION) 
+    def __init__(self, pos, shape,crate,type_id = ObjectsID.ONION):
+        super().__init__(pos, shape,type_id) 
         self.isCut = False
         self.isCooked = False
         self.crate = crate

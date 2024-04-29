@@ -42,7 +42,7 @@ class InteractionManager:
                     print('Un service est fait')
                     map.remove_object(item)
                     map.score.update_score()
-                    return "del"
+                    return "serv"#"del"
                 else:
                     print('plat non valide')
                     return "keep"
@@ -56,7 +56,7 @@ class InteractionManager:
                 item.transfer_ingredients_to(obj)
                 obj.isFull()
                 print("la soupe est dans l'assiette")
-                return "keep"
+                return "toplate"#"keep"
 
         elif isinstance(item, Item) and isinstance(obj,CookingStation): 
             obj.checkBlocked(map)

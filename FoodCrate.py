@@ -1,5 +1,4 @@
 from CookingStation import CookingStation
-from Player import Player
 from Vegetable import Vegetable
 from ObjectsID import ObjectsID
 

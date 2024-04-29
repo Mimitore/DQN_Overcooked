@@ -49,7 +49,7 @@ while running:
 
     # Gestion des touches
     keys = pygame.key.get_pressed()
-    player.execute_actions(keys, game_map)
+    player.execute_human_actions(keys, game_map)
 
 
     # Interface graphique
