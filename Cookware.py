@@ -47,12 +47,12 @@ class Cookware(Container):
             if self.isFull():
             
                 self.isWarm = True
-                print("Le pot a cuit miam :)")
-            else:
-                print("Pas assez d\'ingrédient")
-                print(self.ingredients)
-        else:
-            print("Le pot n\'est pas au dessus du feu")
+            #     print("Le pot a cuit miam :)")
+            # else:
+            #     print("Pas assez d\'ingrédient")
+            #     print(self.ingredients)
+        # else:
+        #     print("Le pot n\'est pas au dessus du feu")
 
     def clearSoup(self, screen, bg):
         return super().clearSoup(screen, bg)

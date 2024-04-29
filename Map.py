@@ -32,8 +32,8 @@ class Map:
             if obj_type_id in self.restricted_types:
                 if self.isAddable(obj, self.objects, obj_type_id):
                     self.objects.append(obj)
-                else:
-                    print(f"There's too many of {obj_type_id} already.")
+                # else:
+                #     print(f"There's too many of {obj_type_id} already.")
             else:
                 # Si l'objet n'est pas de type restreint, l'ajouter sans vérification
                 self.objects.append(obj)
@@ -103,8 +103,6 @@ class Map:
             state.extend(plate_state)  # De même pour les plates
 
         clean_state = [0 if x is None else x for x in state]
-        print(len(clean_state))
-        print(clean_state)
         return clean_state
 
 

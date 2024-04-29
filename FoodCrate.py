@@ -19,7 +19,7 @@ class FoodCrate(CookingStation):
     def interact(self, map):
         super().interact(map)
         if not map.isAddable(Vegetable(self.pos,self.item_type,self),map.objects, ObjectsID.ONION):
-            print("impossible d'ajouter une assiette")
+            # print("impossible d'ajouter un oignon")
             return
         if map.player.is_facing(self):
             if not self.is_blocked: # Si la caisse n'a pas d'objet sur lui qui le bloque
@@ -27,12 +27,12 @@ class FoodCrate(CookingStation):
                     new_item = Vegetable(self.pos,self.item_type,self)
                     map.player.take_item(new_item)
                     map.add_object(new_item)
-                    print(f"Le joueur a pris un {new_item} de la caisse.")
-                else:
-                    print(f"Le joueur tient déjà un {map.player.held_item}.")
+            #         print(f"Le joueur a pris un {new_item} de la caisse.")
+            #     else:
+            #         print(f"Le joueur tient déjà un {map.player.held_item}.")
             
-            else:
-                print("Un objet bloque la caisse, impossible de prendre un item.")
+            # else:
+            #     print("Un objet bloque la caisse, impossible de prendre un item.")
          
     def get_state(self):
         return super().get_state(self)

@@ -27,16 +27,11 @@ class CookingStation(GameObject):
                 if obj.pos == self.pos and obj != self:
                     self.item = obj
                     self.is_blocked = True
-                    print(f"{self} is blocked by {obj}")
                     break
-            if not self.is_blocked:
-                print(f"{self} is not blocked")
 
     def interact(self, map):
         """ Méthode pour gérer l'interaction d'un joueur avec la station """
         self.checkBlocked(map)
-        if map.player.is_facing(self):
-            print(f"Le joueur {map.player} interagit avec la station à la position {self.pos}.")
 
 
     def draw(self, screen):

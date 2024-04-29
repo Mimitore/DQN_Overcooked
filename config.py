@@ -8,7 +8,7 @@ ONION = (205, 175, 149)
 # Rewards
 REWARDS = {
     'cut': 5,         
-    'tocookware': 10, 
-    'toplate': 15, 
-    'serv': 25        
+    'tocookware': 20, 
+    'toplate': 50, 
+    'serv': 200        
 }

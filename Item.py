@@ -22,7 +22,7 @@ class Item(GameObject):
         """ Méthode pour gérer l'interaction d'un joueur avec l'item """
         if map.player.is_facing(self):
             map.player.take_item(self)
-            print(f"Le joueur {map.player} interagit avec l'item à la position {self.pos}.")
+            # print(f"Le joueur {map.player} interagit avec l'item à la position {self.pos}.")
 
     def draw(self, screen):
         if self.shape == "onion":

@@ -30,6 +30,8 @@ class OvercookedEnv(gym.Env):
         self.action_space = spaces.Discrete(6)
         self.state_dim = 69
 
+        self.n_actions = 0
+
     def setup_map(self):
         self.map.add_object(HotStove((0, 50)))
         self.map.add_object(CuttingBoard((450,450)))
@@ -52,7 +54,7 @@ class OvercookedEnv(gym.Env):
         next_state = self._next_observation()
         reward = self.calculate_reward(result)
         done = self.is_done()
-
+        self.n_actions+=1
         return next_state, reward ,done
 
     def calculate_reward(self,result):
@@ -71,11 +73,16 @@ class OvercookedEnv(gym.Env):
 
     def is_done(self):
         # Déterminez si le jeu doit se terminer
-        current_time = pygame.time.get_ticks()
-        if (current_time - self.game_start_time) > self.game_duration:
-            done = True  
-        else:
-            done = False
+        # current_time = pygame.time.get_ticks()
+        # if (current_time - self.game_start_time) > self.game_duration:
+        #     done = True  
+        # else:
+        #     done = False
+        done = False
+        if self.n_actions > 2000:
+            done = True
+
+
         return done
 
     def reset(self):
@@ -86,6 +93,7 @@ class OvercookedEnv(gym.Env):
         # Reconfigurer la map au besoin
         self.setup_map()
         # Retourner l'état initial de l'environnement
+        self.n_actions=0
         return self._next_observation()
 
     

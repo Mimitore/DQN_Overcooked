@@ -129,11 +129,7 @@ class Player(GameObject):
         """ Le joueur prend un item s'il n'en tient pas déjà un. """
         if self.held_item is None and self.is_facing(item):
             self.held_item = item
-            print(f"Le joueur prend un {item}.")
             self.update_item_position()
-            print(item.pos)
-        else:
-            print(f"Le joueur tient déjà un {self.held_item}.")
 
 
     def update_item_position(self):
@@ -154,7 +150,6 @@ class Player(GameObject):
 
             if status == "drop":
                 self.held_item.pos = new_pos
-                print(f"Le joueur lâche un {self.held_item}.")
                 self.held_item = None
                 
             elif status == "del" or status == "tocookware" or status == "serv":
@@ -166,7 +161,7 @@ class Player(GameObject):
             else:
                 if status == 'toplate':
                     result = status
-                print('keep ur object')
+              
 
         return result
 
@@ -174,9 +169,10 @@ class Player(GameObject):
         if self.held_item == None:
             for obj in map.objects:
                 if isinstance(obj, CuttingBoard) and self.is_facing(obj) and isinstance(obj.item,Vegetable):
-                    obj.item.cut()
-                    print("the vegetable is cut")
-                    return True
+                    if not obj.item.isCut:
+                        obj.item.cut()
+                        # print("the vegetable is cut")
+                        return True
         return False
 
 
