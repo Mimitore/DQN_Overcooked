@@ -23,3 +23,7 @@ class ServiceStation(CookingStation):
     def getState(self):
         return super().getState()
     
+    def interact(self, map):
+        super().interact(map)
+        return ''
+    

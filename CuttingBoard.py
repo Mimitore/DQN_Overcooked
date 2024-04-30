@@ -21,8 +21,6 @@ class CuttingBoard(CookingStation):
         for obj in map.objects:
              if obj.pos == self.pos and obj!=self:
                 self.item = obj
-                print("theres an object on the cuttingboard")
-                print(obj)
                 break
              
     def get_state(self):

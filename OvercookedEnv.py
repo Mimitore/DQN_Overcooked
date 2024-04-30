@@ -15,7 +15,7 @@ from ServiceStation import ServiceStation
 import pygame
 from config import REWARDS
 from gym import spaces
-
+from Actions import Actions
 class OvercookedEnv(gym.Env):
     metadata = {'render.modes': ['human', 'rgb_array', 'none']}
 
@@ -29,7 +29,9 @@ class OvercookedEnv(gym.Env):
         self.screen = None
         self.action_space = spaces.Discrete(6)
         self.state_dim = 69
-
+        results = ["", "take_item","take vege from crate","take plate from crate","move","toplate","cut","tocookware","serv","nonvaliditem"]
+        self.actions_occ = {}
+        self.results_occ = {result: 0 for result in results}
         self.n_actions = 0
 
     def setup_map(self):
@@ -55,6 +57,13 @@ class OvercookedEnv(gym.Env):
         reward = self.calculate_reward(result)
         done = self.is_done()
         self.n_actions+=1
+        
+        a = Actions().get_action_name(action)
+        if a not in self.actions_occ:
+            self.actions_occ[a]=1
+        else:
+            self.actions_occ[a]+=1
+
         return next_state, reward ,done
 
     def calculate_reward(self,result):
@@ -68,16 +77,17 @@ class OvercookedEnv(gym.Env):
             reward += REWARDS['toplate']
         elif result == 'serv':
             reward += REWARDS['serv']
+        elif result == 'nonvaliditem' or result =='move' or result == '':
+            reward+= -1
+        if result not in self.results_occ:
+            self.results_occ[result]=1
+        else:
+            self.results_occ[result]+=1
    
         return reward
 
     def is_done(self):
-        # Déterminez si le jeu doit se terminer
-        # current_time = pygame.time.get_ticks()
-        # if (current_time - self.game_start_time) > self.game_duration:
-        #     done = True  
-        # else:
-        #     done = False
+
         done = False
         if self.n_actions > 2000:
             done = True
@@ -94,6 +104,8 @@ class OvercookedEnv(gym.Env):
         self.setup_map()
         # Retourner l'état initial de l'environnement
         self.n_actions=0
+        self.actions_occ = {action: 0 for action in self.actions_occ}
+        self.results_occ = {result: 0 for result in self.results_occ}
         return self._next_observation()
 
     

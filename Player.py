@@ -112,7 +112,7 @@ class Player(GameObject):
             if self.held_item:
                 result = self.drop_item(game_map)
             else:
-                self.interact(game_map)
+                result = self.interact(game_map)
 
         # Découpe
         elif action == Actions.CUT:
@@ -122,14 +122,21 @@ class Player(GameObject):
         return result 
 
     def interact(self,map):
+        results = []
         for obj in map.objects:
-                obj.interact(map)
+            result = obj.interact(map)
+            results.append(result)
+        for r in results:
+            if r != '' and r!=None:
+                return r
+        return ""
 
     def take_item(self, item):
         """ Le joueur prend un item s'il n'en tient pas déjà un. """
         if self.held_item is None and self.is_facing(item):
             self.held_item = item
             self.update_item_position()
+            return 'take_item'
 
 
     def update_item_position(self):
@@ -159,7 +166,7 @@ class Player(GameObject):
                     result = status
 
             else:
-                if status == 'toplate':
+                if status == 'toplate' or status == 'nonvaliditem':
                     result = status
               
 

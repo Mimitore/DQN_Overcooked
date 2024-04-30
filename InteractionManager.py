@@ -29,7 +29,7 @@ class InteractionManager:
                 return "del"
             else:
                 print("Le légume n'est pas coupé ou bien la marmite est remplie.")
-                return "keep"
+                return 'nonvaliditem'#"keep"
         
         elif isinstance(item,Item) and isinstance(obj, CuttingBoard):
             obj.item = item
@@ -45,10 +45,10 @@ class InteractionManager:
                     return "serv"#"del"
                 else:
                     print('plat non valide')
-                    return "keep"
+                    return "nonvaliditem"#"keep"
             else:
                 print('plat non valide')
-                return "keep"
+                return "nonvaliditem" #"keep"
 
         elif isinstance(item,Cookware) and isinstance(obj, Container):
             # A modifier plus tard lorsqu'on aura un autre type de soupe à faire
