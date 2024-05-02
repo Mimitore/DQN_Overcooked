@@ -26,7 +26,7 @@ state_dim = env.state_dim
 action_dim = env.action_space.n 
 agent = DQNAgent(state_dim, action_dim)
 
-num_episodes = 1000
+num_episodes = 4000
 epsilon = 1.0
 epsilon_decay = 0.995
 epsilon_min = 0.01
@@ -57,61 +57,67 @@ plt.grid(True)  # Afficher une grille pour mieux visualiser les lignes
 plt.show()  # Afficher le graphique
 
 
+# Nombre d'épisodes par groupe pour l'agrégation
+interval = 100
 
-# Initialiser un dictionnaire pour stocker les listes des occurrences de chaque action
-action_data = {}
+# Initialiser un dictionnaire pour stocker les données agrégées
+aggregated_data = {}
 
-# Parcourir chaque dictionnaire d'occurrences dans la liste
-for episode_dict in actions:
-    for action, count in episode_dict.items():
-        if action in action_data:
-            action_data[action].append(count)
-        else:
-            action_data[action] = [count]
+for action in actions[0].keys():
+    aggregated_data[action] = []
 
-plt.figure(figsize=(12, 8))
+# Agréger les données
+for i in range(0, num_episodes, interval):
+    temp_data = {action: 0 for action in actions[0].keys()}
+    for j in range(i, min(i + interval, num_episodes)):
+        for action in actions[j]:
+            temp_data[action] += actions[j][action]
+    
+    for action in temp_data:
+        aggregated_data[action].append(temp_data[action] / interval)  # Moyenne des occurrences par intervalle
 
-# Tracer une courbe pour chaque action
-for action, occurrences in action_data.items():
-    plt.plot(list(range(1, num_episodes + 1)), occurrences, label=action) 
+# Tracer les données agrégées
+plt.figure(figsize=(10, 5))
+for action, data in aggregated_data.items():
+    plt.plot(range(0, num_episodes, interval), data, label=action)
 
-# Ajouter des titres et des labels
-plt.title('Action Occurrences Over Episodes')
 plt.xlabel('Episode')
-plt.ylabel('Occurrences')
-plt.legend(title='Actions')
-# Afficher une grille
+plt.ylabel('Average Occurrences')
+plt.title('Action Occurrences per Interval')
+plt.legend()
 plt.grid(True)
-# Afficher le graphique
 plt.show()
 
 
 
-# Initialiser un dictionnaire pour stocker les listes des occurrences de chaque action
 result_data = {}
+important_result = ['cut', 'toplate', 'tocookware', 'serv']
 
-# Parcourir chaque dictionnaire d'occurrences dans la liste
-for episode_dict in results:
+for action in important_result:
+    result_data[action] = [0] * ((num_episodes + interval - 1) // interval) 
+
+for i, episode_dict in enumerate(results):
+    index = i // interval 
     for result, count in episode_dict.items():
-        if result in result_data:
-            result_data[result].append(count)
-        else:
-            result_data[result] = [count]
+        if result in important_result:
+            result_data[result][index] += count  
+
+for result in important_result:
+    for i in range(len(result_data[result])):
+        result_data[result][i] /= interval  # Moyenner les occurrences sur l'intervalle
 
 plt.figure(figsize=(12, 8))
-
-print(result_data)
-# Tracer une courbe pour chaque action
+x_values = list(range(0, num_episodes, interval))
 for result, occurrences in result_data.items():
-    plt.plot(list(range(1, num_episodes + 1)), occurrences, label=result) 
+    plt.plot(x_values, occurrences, label=result)
 
 # Ajouter des titres et des labels
-plt.title('Result Occurrences Over Episodes')
+plt.title('Result Occurrences Over Intervals of Episodes')
 plt.xlabel('Episode')
-plt.ylabel('Occurrences')
+plt.ylabel('Average Occurrences')
 plt.legend(title='Results')
-# Afficher une grille
 plt.grid(True)
+
 # Afficher le graphique
 plt.show()
 

@@ -29,7 +29,7 @@ class OvercookedEnv(gym.Env):
         self.screen = None
         self.action_space = spaces.Discrete(6)
         self.state_dim = 69
-        results = ["", "take_item","take vege from crate","take plate from crate","move","toplate","cut","tocookware","serv","nonvaliditem"]
+        results = ["", "take_item","take vege from crate","take plate from crate","move","toplate","cut","tocookware","serv","nonvaliditem","facingstove","facingcut","blocked","facingplate"]
         self.actions_occ = {}
         self.results_occ = {result: 0 for result in results}
         self.n_actions = 0
@@ -77,7 +77,20 @@ class OvercookedEnv(gym.Env):
             reward += REWARDS['toplate']
         elif result == 'serv':
             reward += REWARDS['serv']
-        elif result == 'nonvaliditem' or result =='move' or result == '':
+        elif result =='take vege from crate' or result == 'take plate from crate':
+            reward+=REWARDS['take . from crate']
+        elif result == 'facingcut':
+            reward += REWARDS['facingcut']
+        elif result == "dropveg":
+            reward+= REWARDS["dropveg"]
+        elif result == 'facingstove':
+            reward+= REWARDS["facingstove"]
+        elif result == 'facingplate':
+            reward+= REWARDS['facingplate']
+        elif result == 'blocked':
+            reward+= REWARDS['blocked']
+
+        else:
             reward+= -1
         if result not in self.results_occ:
             self.results_occ[result]=1
@@ -130,6 +143,5 @@ class OvercookedEnv(gym.Env):
     
         # Si nécessaire, convertissez cette liste en un tableau numpy pour la compatibilité avec des bibliothèques comme NumPy ou PyTorch
         observation = np.array(current_state, dtype=np.float32)
-    
         return observation
 

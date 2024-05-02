@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import random
 from collections import deque
-
+import numpy as np
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 class DQNetwork(nn.Module):
@@ -57,10 +57,11 @@ class DQNAgent:
         if len(self.memory) < batch_size:
             return
         state, action, reward, next_state, done = self.memory.sample(batch_size)
-
+        state = np.array(state)
         state = torch.tensor(state, dtype=torch.float32).to(device)
         action = torch.tensor(action, dtype=torch.long).to(device)
         reward = torch.tensor(reward, dtype=torch.float32).to(device)
+        next_state = np.array(next_state)
         next_state = torch.tensor(next_state, dtype=torch.float32).to(device)
         done = torch.tensor(done, dtype=torch.float32).to(device)
 

@@ -5,6 +5,7 @@ from config import WHITE
 from Actions import Actions
 from GameObject import GameObject
 from ObjectsID import ObjectsID
+from HotStove import HotStove
 
 class Player(GameObject):
     def __init__(self, initial_position,type_id = ObjectsID.PLAYER):
@@ -42,7 +43,7 @@ class Player(GameObject):
     
     def move(self, dx, dy, obstacles):
         # Copie temporaire pour tester le déplacement
-        
+        result = 'blocked'
         temp_rect = pygame.Rect(self.pos[0], self.pos[1], 50, 50).copy()
         temp_rect.x += dx
         temp_rect.y += dy
@@ -51,8 +52,9 @@ class Player(GameObject):
         if temp_rect.x >= 0 and temp_rect.x <= 450 and temp_rect.y >= 0 and temp_rect.y <= 450:
             if not any(temp_rect.colliderect(ob) for ob in obstacles):
                 self.pos = temp_rect[0],temp_rect[1]
+                result = 'move'
         self.update_item_position()
-
+        return result
 
     def execute_human_actions(self, keys, game_map):
         # Gestion des mouvements
@@ -60,15 +62,19 @@ class Player(GameObject):
         if keys[pygame.K_LEFT]:
             self.move(-player_speed, 0, game_map.obstacles)
             self.setDirection("left")
+            print(self.is_facing_stove(game_map))
         elif keys[pygame.K_RIGHT]:
             self.move(player_speed, 0, game_map.obstacles)
             self.setDirection("right")
+            print(self.is_facing_stove(game_map))
         elif keys[pygame.K_UP]:
             self.move(0, -player_speed, game_map.obstacles)
             self.setDirection("up")
+            print(self.is_facing_stove(game_map))
         elif keys[pygame.K_DOWN]:
             self.move(0, player_speed, game_map.obstacles)
             self.setDirection("down")
+            print(self.is_facing_stove(game_map))
 
         # Gestion des interactions
         if keys[pygame.K_SPACE]:
@@ -90,22 +96,24 @@ class Player(GameObject):
 
         # Mouvement
         if action == Actions.LEFT:
-            self.move(-player_speed, 0, game_map.obstacles)
+            result = self.move(-player_speed, 0, game_map.obstacles)
             self.setDirection("left")
-            return 'move'
         elif action == Actions.RIGHT:
-            self.move(player_speed, 0, game_map.obstacles)
+            result = self.move(player_speed, 0, game_map.obstacles)
             self.setDirection("right")
-            return 'move'
         elif action == Actions.UP:
-            self.move(0, -player_speed, game_map.obstacles)
+            result = self.move(0, -player_speed, game_map.obstacles)
             self.setDirection("up")
-            return 'move'
         elif action == Actions.DOWN:
-            self.move(0, player_speed, game_map.obstacles)
+            result = self.move(0, player_speed, game_map.obstacles)
             self.setDirection("down")
-            return 'move'
 
+        if self.is_facing_stove(game_map):
+            result = 'facingstove'
+        if self.is_facing_cut(game_map):
+            result = 'facingcut'
+        if self.is_facing_plate(game_map):
+            result = 'facingplate'
         # Interactions
         elif action == Actions.SPACE:
             self.update_item_position()
@@ -157,7 +165,16 @@ class Player(GameObject):
 
             if status == "drop":
                 self.held_item.pos = new_pos
+                if self.held_item.type_id == ObjectsID.ONION:
+                    for obj in map.objects:
+                        if obj.type_id == ObjectsID.CUTTING_BOARD:
+                            if obj.pos == self.held_item.pos:
+                                status = 'dropveg'
+                                result = status
+                            
                 self.held_item = None
+
+                
                 
             elif status == "del" or status == "tocookware" or status == "serv":
                 self.held_item = None
@@ -178,11 +195,31 @@ class Player(GameObject):
                 if isinstance(obj, CuttingBoard) and self.is_facing(obj) and isinstance(obj.item,Vegetable):
                     if not obj.item.isCut:
                         obj.item.cut()
-                        # print("the vegetable is cut")
                         return True
         return False
 
-
+    def is_facing_cut(self,map):
+        if self.held_item != None and self.held_item.type_id == ObjectsID.ONION:
+            for obj in map.objects:
+                if isinstance(obj,CuttingBoard) and self.is_facing(obj):
+                    return True
+        return False
+    
+    def is_facing_stove(self,map):
+        if self.held_item != None and self.held_item.type_id == ObjectsID.ONION:
+            for obj in map.objects:
+                if isinstance(obj,HotStove) and self.is_facing(obj) and self.held_item.isCut:
+                    return True
+        return False
+    
+    def is_facing_plate(self,map):
+        if self.held_item !=None and self.held_item.type_id == ObjectsID.COOKWARE:
+            if self.held_item.full and self.held_item.isWarm:
+                for obj in map.objects:
+                    if obj.type_id == ObjectsID.PLATE and obj.pos == self.held_item.pos:
+                        return True
+        return False
+    
     def draw(self, screen):
         pygame.draw.rect(screen, WHITE, pygame.Rect(self.pos[0], self.pos[1], 50, 50))
 
